@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Welcome Page</title>
+  </head>
+  <body>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/index.css">
+
+    <div class="sidebar">
+      <img src="img/arges_welcome_monitor_bildleiste.jpg" alt="">
+    </div>
+    <div class="header">
+      <span>Welcome to </span><span style="font-weight: 700">ARGES</span>
+    </div>
+
+    <table style="position: absolute; top: 330px; left: 762px">
+      <thead>
+        <tr>
+          <td style="height: 26px; width: 180px; padding: 72px 0 0 36px">
+            <img src="img/arges_welcome_monitor_sehstrahl_links.png" width="121" height="32" style="float: left" alt="">
+          </td>
+
+          <!-- DYNAMISCHER DATUM -->
+          <td class="font42" id="date" style="padding: 72px 0 0 59px; height: 26px; vertical-align: middle; width: 585px;">Datum</td>
+          <td colspan="2" style="padding: 72px 0 0 0; height: 26px; vertical-align: middle; width: 2337px;">
+            <img src="img/arges_welcome_monitor_sehstrahl_rechts.png" width="2337" height="32" alt="">
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="4" style="height: 70px"></td>
+        </tr>
+
+        <!-- AB HIER MUSS DYNAMISCH BEFÜLLT WERDEN -->
+        <tr>
+          <td class="col col1">08:30</td>
+          <td class="col col2"></td>
+          <td class="col col3">Technolas Perfect Vision GmbH</td>
+          <td class="col col4">
+            <img src="http://intranet/SiteCollectionImages/WelcomeLogo/TPV.png" alt="">
+          </td>
+        </tr>
+        <!-- /ENDE DYNAMISCHER INHALT -->
+
+
+      </tbody>
+    </table>
+
+
+    <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="script/func.js"></script>
+    <script type="text/javascript">
+
+    let datum = getDatum();
+
+    $( document ).ready(function() {
+      $("#date").html(datum);
+    });
+
+
+    </script>
+  </body>
+</html>
