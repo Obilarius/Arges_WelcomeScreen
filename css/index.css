@@ -93,3 +93,30 @@ td {
 ul {
   line-height: 110%;
 }
+
+
+/* ANMELDE BUTTON */
+.btnRegister {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  padding: 20px 60px;
+}
+
+/* ANMELDE MODAL */
+.modal-dialog {
+  width: 500px;
+  margin: 50vh auto;
+}
+.modal-title {
+  font-size: 30pt;
+}
+.modal-dialog .close {
+  font-size: 30pt;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.modal-footer button {
+  /* font-size: 25pt; */
+}
