@@ -109,11 +109,12 @@ ul {
 
 /* ANMELDE MODAL */
 .modal-dialog {
-  width: 500px;
+  width: 700px;
   margin: 50vh auto;
 }
 .modal-title {
   font-size: 30pt;
+  width: 90%;
 }
 .modal-dialog .close {
   font-size: 30pt;
