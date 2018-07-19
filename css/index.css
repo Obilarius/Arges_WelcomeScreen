@@ -94,6 +94,10 @@ ul {
   line-height: 110%;
 }
 
+.userRegisterLink {
+  cursor: pointer;
+}
+
 
 /* ANMELDE BUTTON */
 .btnRegister {

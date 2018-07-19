@@ -37,13 +37,12 @@
           <td class="col col1">08:30</td>
           <td class="col col2">
             <ul>
-              <li>Herr Kalimero van Kallenbach</li>
-              <li>Herr Langhals</li>
-              <li>Herr Sawetzki</li>
-              <li>Herr Kallenbach</li>
-              <li>Herr Langhals</li>
-              <li>Herr Sawetzki</li>
-              <li>Herr Kallenbach</li>
+              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Herr Kalimero van Kallenbach" data-company="Technolas Perfect Vision GmbH">Mr. Kalimero van Kallenbach</span></li>
+              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Kallenbach" data-company="Technolas Perfect Vision GmbH">Mr. Kallenbach</span></li>
+              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Langhals" data-company="Technolas Perfect Vision GmbH">Mr. Langhals</span></li>
+              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Sawtzki" data-company="Technolas Perfect Vision GmbH">Mr. Sawtzki</span></li>
+              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Kallenbach" data-company="Technolas Perfect Vision GmbH">Mr. Kallenbach</span></li>
+              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Bambidibu" data-company="Technolas Perfect Vision GmbH">Mr. Bambidibu</span></li>
             </ul>
           </td>
           <td class="col col3">Technolas Perfect Vision GmbH sdouhwr</td>
@@ -63,7 +62,12 @@
 
         <tr class="dynTr">
           <td class="col col1">16:00</td>
-          <td class="col col2"></td>
+          <td class="col col2">
+            <ul>
+              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Herr Walzenbach" data-company="Echsenmensch Inc.">Herr Walzenbach</span></li>
+              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Herr Weiss" data-company="Echsenmensch Inc.">Herr Weiss</span></li>
+            </ul>
+          </td>
           <td class="col col3">Echsenmensch Inc.</td>
           <td class="col col4">
             <img src="https://www.echsenmensch.de/echsenmensch.jpg" alt="">
@@ -95,13 +99,13 @@
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <input class="form-control form-control-lg" type="text" placeholder="Name">
+                <input class="form-control form-control-lg inputName" type="text" placeholder="Name">
               </div>
               <div class="form-group">
-                <input class="form-control form-control-lg" type="text" placeholder="Company">
+                <input class="form-control form-control-lg inputCompany" type="text" placeholder="Company">
               </div>
               <div class="form-group">
-                <input class="form-control form-control-lg" type="text" placeholder="Appointment at">
+                <input class="form-control form-control-lg inputAppointment" type="text" placeholder="Appointment at">
               </div>
             </form>
 
@@ -127,6 +131,27 @@
 
   $( document ).ready(function() {
     $("#date").html(datum);
+
+    $('#registerModalCenter').on('show.bs.modal', function (event) {
+      let button = $(event.relatedTarget) // Button that triggered the modal
+
+      if (button[0].className == "userRegisterLink") {
+        let name = button.data('name') // Extract info from data-* attributes
+        let company = button.data('company')
+
+        // Update the modal's content.
+        let modal = $(this)
+        modal.find('.modal-title').text('Welcome ' + name)
+        modal.find('.modal-body .inputName').val(name).attr("readonly", true)
+        modal.find('.modal-body .inputCompany').val(company).attr("readonly", true)
+      } else {
+        // Update the modal's content.
+        let modal = $(this)
+        modal.find('.modal-title').text("Welcome to ARGES")
+        modal.find('.modal-body .inputName').val("").attr("readonly", false)
+        modal.find('.modal-body .inputCompany').val("").attr("readonly", false)
+      }
+    })
   });
 
   </script>
