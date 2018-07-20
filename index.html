@@ -33,6 +33,7 @@
       <tbody>
 
         <!-- AB HIER MUSS DYNAMISCH BEFÜLLT WERDEN -->
+        <!-- TODO: Termine dynamisch anlegen -->
         <tr class="dynTr">
           <td class="col col1">08:30</td>
           <td class="col col2">
@@ -154,6 +155,7 @@
     })
 
     $('#btnRegisterCheckIn').on('click', function (event) {
+      // TODO: CheckIn in SQL Datenbank eintragen und ID auslesen
 
       // TODO: Barcode dynamisch übergeben
       let url = 'printTest.html?name=' + $('.modal-body .inputName').val() + '&company=' + $('.modal-body .inputCompany').val() + '&date=' + getDatum() + '&code=' + "6042_TestDataMatrix";
