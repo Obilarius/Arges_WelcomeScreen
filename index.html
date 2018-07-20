@@ -24,7 +24,7 @@
           </td>
 
           <!-- DYNAMISCHES DATUM -->
-          <td class="font42 widthCol2" id="date">Datum</td>
+          <td class="col2 font42 widthCol2" id="date">Datum</td>
           <td class="widthCol3">
             <img src="img/arges_welcome_monitor_sehstrahl_rechts.png" alt="">
           </td>
@@ -40,7 +40,7 @@
               <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Herr Kalimero van Kallenbach" data-company="Technolas Perfect Vision GmbH">Mr. Kalimero van Kallenbach</span></li>
               <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Kallenbach" data-company="Technolas Perfect Vision GmbH">Mr. Kallenbach</span></li>
               <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Langhals" data-company="Technolas Perfect Vision GmbH">Mr. Langhals</span></li>
-              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Sawtzki" data-company="Technolas Perfect Vision GmbH">Mr. Sawtzki</span></li>
+              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Sawtzki" data-company="Technolas Perfect Vision GmbH">Mr. Sawetzki</span></li>
               <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Kallenbach" data-company="Technolas Perfect Vision GmbH">Mr. Kallenbach</span></li>
               <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Bambidibu" data-company="Technolas Perfect Vision GmbH">Mr. Bambidibu</span></li>
             </ul>
@@ -112,7 +112,7 @@
           </div>
           <div class="modal-footer">
             <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-            <button type="button" class="btn btn-primary">Register</button>
+            <button type="button" class="btn btn-primary" id="btnRegisterCheckIn">Register</button>
           </div>
         </div>
       </div>
@@ -127,7 +127,7 @@
   <script type="text/javascript" src="script/func.js"></script>
   <script type="text/javascript">
 
-  let datum = getDatum();
+  let datum = getDatumLang();
 
   $( document ).ready(function() {
     $("#date").html(datum);
@@ -151,6 +151,16 @@
         modal.find('.modal-body .inputName').val("").attr("readonly", false)
         modal.find('.modal-body .inputCompany').val("").attr("readonly", false)
       }
+    })
+
+    $('#btnRegisterCheckIn').on('click', function (event) {
+
+      // TODO: Barcode dynamisch übergeben
+      let url = 'printTest.html?name=' + $('.modal-body .inputName').val() + '&company=' + $('.modal-body .inputCompany').val() + '&date=' + getDatum() + '&code=' + "6042_TestDataMatrix";
+      window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
+
+      $('#registerModalCenter').modal('hide');
+
     })
   });
 

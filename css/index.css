@@ -45,8 +45,8 @@ table {
 
 /* TABLE HEAD */
 thead tr td { vertical-align: middle; }
-thead tr td:nth-child(1) { text-align: right;}
-thead tr td:nth-child(2) { text-align: center;}
+thead tr td:nth-child(1) { text-align: center;}
+thead tr td:nth-child(2) { /* text-align: center; */}
 thead tr td:nth-child(3) { text-align: left;}
 
 /* TABLE BODY */
@@ -64,7 +64,7 @@ thead tr td:nth-child(3) { text-align: left;}
   text-align: center;
 }
 .col2 {
-  padding-left: 10px;
+  padding-left: 50px;
   padding-right: 10px;
 }
 .col3 {
