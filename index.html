@@ -156,18 +156,18 @@
 
     $('#btnRegisterCheckIn').on('click', function (event) {
       // TODO: CheckIn in SQL Datenbank eintragen und ID auslesen
-      // $.post("mysql.php",
-      // {
-      //     name: "Donald Duck",
-      //     company: "Duckburg"
-      // }, function(data, status){
-      //   alert("Data: " + data + "\nStatus: " + status);
-      // });
+      $.post("mysql.php",
+      {
+          name: "Donald Duck",
+          company: "Duckburg"
+      }, function(data, status){
+        console.log(data);
+      });
 
       // TODO: Barcodeinhalt dynamisch übergeben
       // TODO: Print auf neuen Drucker (print.html) umleiten
-      let url = 'printTest.html?name=' + $('.modal-body .inputName').val() + '&company=' + $('.modal-body .inputCompany').val() + '&date=' + getDatum() + '&code=' + "6042_TestDataMatrix";
-      window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
+      // let url = 'printTest.html?name=' + $('.modal-body .inputName').val() + '&company=' + $('.modal-body .inputCompany').val() + '&date=' + getDatum() + '&code=' + "6042_TestDataMatrix";
+      // window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
 
       $('#registerModalCenter').modal('hide');
 
@@ -200,11 +200,11 @@
               // The result can be accessed through the `m`-variable.
               m.forEach((name, groupIndex) => {
                 if (groupIndex == 1) {
-                  console.log(termin._Company);
+                  // console.log(termin._Company);
 
                   let company = termin._Company.replace(/[<br>]*<[/]*div[^>]*>/gi, "");
                   company = company.replace(/<[/]*br[^>]*>/gi, " - ");
-                  console.log(company);
+                  // console.log(company);
 
                   terminTemplate += '<li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter"';
                   terminTemplate += 'data-name="'+ name +'" data-company="'+ company +'">'+ name +'</span></li>';
@@ -217,7 +217,7 @@
           $("#dynTermin").append(terminTemplate);
         })
       }, "text");
-      // ENDE DYNAMISCHE TERMINE
+    // ENDE DYNAMISCHE TERMINE
     // }, 1000);
 
 
