@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xsi:schemaLocation="ARGESVisitorsList http://sap/ReportServer?%2FSharePoint%2FKontakte%2FARGESVisitorsList&amp;rs%3AFormat=XML&amp;rc%3ASchema=True" Name="ARGESVisitorsList" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="ARGESVisitorsList">
+  <table1>
+    <Detail_Collection>
+      <Detail ID="1866" Start_Time="10:00" End_Time="2018-07-20T13:30:00" Termin="10:00 - 13:30" WelcomeDisplayTimeFrom="2018-07-20T07:00:00" WelcomeDisplayTimeTo="2018-07-20T14:00:00" Location="MeetingRoom_GroundFloor" Company="&lt;div&gt;Dana Power Technologies Group&lt;br&gt;&lt;/div&gt;" Visitors="&lt;div&gt;Herr Burschey&lt;/div&gt;&#xD;&#xA;&lt;div&gt;Herr Torrubias&lt;/div&gt;" WelcomeLogo="http://intranet/SiteCollectionImages/WelcomeLogo/Dana-Logo.png" />
+      <Detail ID="1867" Start_Time="10:00" End_Time="2018-07-20T12:00:00" Termin="10:00 - 12:00" WelcomeDisplayTimeFrom="2018-07-20T07:00:00" WelcomeDisplayTimeTo="2018-07-20T12:30:00" Location="MeetingRoom_FirstFloor" Company="&lt;div&gt;Densitron GmbH&lt;br&gt;solectrix GmbH&lt;/div&gt;" Visitors="&lt;div&gt;Herr Kallenbach&lt;/div&gt;&#xD;&#xA;&lt;div&gt;Herr Langhals&lt;/div&gt;" WelcomeLogo="http://intranet/SiteCollectionImages/WelcomeLogo/densitron-solectrix.png" />
+      <Detail ID="1869" Start_Time="08:30" End_Time="2018-07-20T15:00:00" Termin="08:30 - 15:00" WelcomeDisplayTimeFrom="2018-07-20T07:00:00" WelcomeDisplayTimeTo="2018-07-20T15:30:00" Location="ARGES GmbH Wackersdorf" Company="&lt;div&gt;Technolas Perfect Vision GmbH&lt;/div&gt;" Visitors="&lt;div&gt;Herr&amp;nbsp;Dorfmeister&lt;/div&gt;" WelcomeLogo="http://intranet/SiteCollectionImages/WelcomeLogo/TPV.png" />
+    </Detail_Collection>
+  </table1>
+</Report>

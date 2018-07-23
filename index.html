@@ -5,7 +5,7 @@
     <title>Welcome Page</title>
   </head>
   <body>
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/index.css">
 
@@ -30,11 +30,10 @@
           </td>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="dynTermin">
 
         <!-- AB HIER MUSS DYNAMISCH BEFÜLLT WERDEN -->
-        <!-- TODO: Termine dynamisch anlegen -->
-        <tr class="dynTr">
+        <!-- <tr class="dynTr">
           <td class="col col1">08:30</td>
           <td class="col col2">
             <ul>
@@ -73,7 +72,7 @@
           <td class="col col4">
             <img src="https://www.echsenmensch.de/echsenmensch.jpg" alt="">
           </td>
-        </tr>
+        </tr> -->
         <!-- /ENDE DYNAMISCHER INHALT -->
 
       </tbody>
@@ -125,6 +124,7 @@
 
   <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="script/bootstrap.js"></script>
+  <script type="text/javascript" src="script/ObjTree.js"></script>
   <script type="text/javascript" src="script/func.js"></script>
   <script type="text/javascript">
 
@@ -156,14 +156,72 @@
 
     $('#btnRegisterCheckIn').on('click', function (event) {
       // TODO: CheckIn in SQL Datenbank eintragen und ID auslesen
+      // $.post("mysql.php",
+      // {
+      //     name: "Donald Duck",
+      //     company: "Duckburg"
+      // }, function(data, status){
+      //   alert("Data: " + data + "\nStatus: " + status);
+      // });
 
-      // TODO: Barcode dynamisch übergeben
+      // TODO: Barcodeinhalt dynamisch übergeben
+      // TODO: Print auf neuen Drucker (print.html) umleiten
       let url = 'printTest.html?name=' + $('.modal-body .inputName').val() + '&company=' + $('.modal-body .inputCompany').val() + '&date=' + getDatum() + '&code=' + "6042_TestDataMatrix";
       window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
 
       $('#registerModalCenter').modal('hide');
 
     })
+
+
+    // DYNAMISCHE TERMINE
+
+    // XML EINLESEN
+    // window.setInterval(function()  {
+      jQuery.get("TEST_ARGESVisitorsList.xml", function(data)  {
+        xotree = new XML.ObjTree()
+        var jsonObj = xotree.parseXML( data );
+        jsonObj = jsonObj.Report.table1.Detail_Collection.Detail
+
+        $("#dynTermin").html("");
+        $.each(jsonObj, function( key, termin ) {
+          // console.log(termin);
+
+          var terminTemplate = '<tr class="dynTr"><td class="col col1">'+ termin._Start_Time +'</td><td class="col col2"><ul>';
+
+          // NAME PARSEN
+          const regex = /div>(.*?)<\/div/gm;
+          let m;
+          while ((m = regex.exec(termin._Visitors)) !== null) {
+              // This is necessary to avoid infinite loops with zero-width matches
+              if (m.index === regex.lastIndex) {
+                  regex.lastIndex++;
+              }
+              // The result can be accessed through the `m`-variable.
+              m.forEach((name, groupIndex) => {
+                if (groupIndex == 1) {
+                  console.log(termin._Company);
+
+                  let company = termin._Company.replace(/[<br>]*<[/]*div[^>]*>/gi, "");
+                  company = company.replace(/<[/]*br[^>]*>/gi, " - ");
+                  console.log(company);
+
+                  terminTemplate += '<li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter"';
+                  terminTemplate += 'data-name="'+ name +'" data-company="'+ company +'">'+ name +'</span></li>';
+                }
+              });
+          }
+
+          terminTemplate += '</ul></td><td class="col col3">'+ termin._Company +'</td><td class="col col4"><img src="'+ termin._WelcomeLogo +'" alt=""></td></tr>';
+
+          $("#dynTermin").append(terminTemplate);
+        })
+      }, "text");
+      // ENDE DYNAMISCHE TERMINE
+    // }, 1000);
+
+
+
   });
 
   </script>
