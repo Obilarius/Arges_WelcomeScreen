@@ -105,7 +105,7 @@
                 <input class="form-control form-control-lg inputCompany" type="text" placeholder="Company">
               </div>
               <div class="form-group">
-                <input class="form-control form-control-lg inputAppointment" type="text" placeholder="Appointment at">
+                <input class="form-control form-control-lg inputAppointment" type="text" placeholder="Host">
               </div>
             </form>
 
@@ -134,40 +134,54 @@
     $("#date").html(datum);
 
     $('#registerModalCenter').on('show.bs.modal', function (event) {
-      let button = $(event.relatedTarget) // Button that triggered the modal
+      var button = $(event.relatedTarget) // Button that triggered the modal
 
       if (button[0].className == "userRegisterLink") {
         let name = button.data('name') // Extract info from data-* attributes
         let company = button.data('company')
+        let appID = button.data('appID')
+        let location = button.data('location')
 
         // Update the modal's content.
         let modal = $(this)
         modal.find('.modal-title').text('Welcome ' + name)
         modal.find('.modal-body .inputName').val(name).attr("readonly", true)
         modal.find('.modal-body .inputCompany').val(company).attr("readonly", true)
+        modal.find('.modal-body .inputAppointment').val("").attr("readonly", false)
+        modal.find('.modal-body').data({ appID: button.data('appid'), location: button.data('location'), host: button.data('host') });
       } else {
         // Update the modal's content.
         let modal = $(this)
         modal.find('.modal-title').text("Welcome to ARGES")
         modal.find('.modal-body .inputName').val("").attr("readonly", false)
         modal.find('.modal-body .inputCompany').val("").attr("readonly", false)
+        modal.find('.modal-body .inputAppointment').val("").attr("readonly", false)
+        modal.find('.modal-body').data({ appID: "", location: "", host: "" });
       }
     })
 
+    // BUTTON REGISTER ## SCHREIBT IN DATENBANK UND ERZEUGT DAS LABEL
     $('#btnRegisterCheckIn').on('click', function (event) {
-      // TODO: CheckIn in SQL Datenbank eintragen und ID auslesen
+      // ÜBERGABE AN DIE DATENBANK
       $.post("mysql.php",
       {
-          name: "Donald Duck",
-          company: "Duckburg"
-      }, function(data, status){
-        console.log(data);
+          name: $('.modal-body .inputName').val(),
+          company: $('.modal-body .inputCompany').val(),
+          appid: $('.modal-body').data("appID"),
+          location: $('.modal-body').data("location"),
+          host: $('.modal-body .inputAppointment').val()
+      }, function(id, status){
+        // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
+        // TODO: Barcodeinhalt dynamisch übergeben
+        // TODO: Print auf neuen Drucker (print.html) umleiten
+        var url = 'printTest.html';
+        url += '?name=' + $('.modal-body .inputName').val();
+        url += '&company=' + $('.modal-body .inputCompany').val();
+        url += '&date=' + getDatum();
+        url += '&code=' + $.trim(id);
+        // console.log(url);
+        window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
       });
-
-      // TODO: Barcodeinhalt dynamisch übergeben
-      // TODO: Print auf neuen Drucker (print.html) umleiten
-      // let url = 'printTest.html?name=' + $('.modal-body .inputName').val() + '&company=' + $('.modal-body .inputCompany').val() + '&date=' + getDatum() + '&code=' + "6042_TestDataMatrix";
-      // window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
 
       $('#registerModalCenter').modal('hide');
 
@@ -177,6 +191,7 @@
     // DYNAMISCHE TERMINE
 
     // XML EINLESEN
+    // TODO: Interval aktivieren
     // window.setInterval(function()  {
       jQuery.get("TEST_ARGESVisitorsList.xml", function(data)  {
         xotree = new XML.ObjTree()
@@ -200,14 +215,21 @@
               // The result can be accessed through the `m`-variable.
               m.forEach((name, groupIndex) => {
                 if (groupIndex == 1) {
-                  // console.log(termin._Company);
+                  // console.log(termin);
 
                   let company = termin._Company.replace(/[<br>]*<[/]*div[^>]*>/gi, "");
                   company = company.replace(/<[/]*br[^>]*>/gi, " - ");
-                  // console.log(company);
 
                   terminTemplate += '<li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter"';
-                  terminTemplate += 'data-name="'+ name +'" data-company="'+ company +'">'+ name +'</span></li>';
+                  terminTemplate += 'data-name="'+ name +'"';
+                  terminTemplate += 'data-company="'+ company +'"';
+                  terminTemplate += 'data-appid="'+ termin._ID +'"';
+                  terminTemplate += 'data-location="'+ termin._Location +'"';
+                  // TODO: HOST aus XML an Button hängen
+                  // terminTemplate += 'data-host="'+ termin._Host +'"';
+                  terminTemplate += 'data-host="Host Name"';
+
+                  terminTemplate += '>'+ name +'</span></li>';
                 }
               });
           }

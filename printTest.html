@@ -27,11 +27,14 @@
       let paare = wertestring.split("&");
       let paar, name, wert;
       for (var i = 0; i < paare.length; i++) {
+
         paar = paare[i].split("=");
         name = paar[0];
         wert = paar[1];
+
         name = unescape(name).replace("+", " ");
         wert = unescape(wert).replace("+", " ");
+        wert = unescape(wert).replace("Â", "");
 
         if (name == "code") {
           $(".datamatrix").attr("src", "http://bwipjs-api.metafloor.com/?bcid=datamatrix&text=" + wert)
@@ -42,7 +45,7 @@
     }
 
     // TODO: Print aktivieren
-    // window.print();
+    window.print();
     window.close();
   });
 </script>
