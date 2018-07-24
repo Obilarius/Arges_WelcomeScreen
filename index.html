@@ -172,7 +172,6 @@
           host: $('.modal-body .inputAppointment').val()
       }, function(id, status){
         // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
-        // TODO: Barcodeinhalt dynamisch übergeben
         // TODO: Print auf neuen Drucker (print.html) umleiten
         var url = 'printTest.html';
         url += '?name=' + $('.modal-body .inputName').val();
@@ -192,19 +191,25 @@
 
     // XML EINLESEN
     // TODO: Interval aktivieren
+    // TODO: Original XML Pfad
     // window.setInterval(function()  {
-      jQuery.get("TEST_ARGESVisitorsList.xml", function(data)  {
+      jQuery.get("ARGESVisitorsList.xml", function(data)  {
         xotree = new XML.ObjTree()
         var jsonObj = xotree.parseXML( data );
         jsonObj = jsonObj.Report.table1.Detail_Collection.Detail
 
+        if (!Array.isArray(jsonObj)) {
+          var temp = jsonObj;
+          var jsonObj = new Array;
+          jsonObj.push(temp);
+        }
+
         $("#dynTermin").html("");
         $.each(jsonObj, function( key, termin ) {
-          // console.log(termin);
-
           var terminTemplate = '<tr class="dynTr"><td class="col col1">'+ termin._Start_Time +'</td><td class="col col2"><ul>';
 
-          // NAME PARSEN
+          // NAME IN ARRAY ZERLEGEN
+          var names = termin._Visitors.replace( /\r\n/gm, "#" ).split("#");
           const regex = /div>(.*?)<\/div/gm;
           let m;
           while ((m = regex.exec(termin._Visitors)) !== null) {
