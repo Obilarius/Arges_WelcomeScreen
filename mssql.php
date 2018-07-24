@@ -1,13 +1,14 @@
 
 <?php
 
+// CHECKIN
 if( isset($_POST['name'], $_POST['company']) ) {
   // $pdo = new PDO('mysql:host=localhost;dbname=test', 'username', 'password');
   try {
     $pdo = new PDO("sqlsrv:Server=dionysos;Database=Visitors", NULL, NULL);
     $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
   } catch (PDOException $e) {
-      echo "Failed to get DB handle: " . $e->getMessage();
+      // echo "Failed to get DB handle: " . $e->getMessage();
       exit;
   }
 
@@ -30,6 +31,28 @@ if( isset($_POST['name'], $_POST['company']) ) {
   $lastID = $pdo->lastInsertId();
 
   echo $lastID;
+}
+
+
+// CHECKOUT
+if (isset($_POST['visitorid'])) {
+  try {
+    $pdo = new PDO("sqlsrv:Server=dionysos;Database=Visitors", NULL, NULL);
+    $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+  } catch (PDOException $e) {
+      echo "Failed to get DB handle: " . $e->getMessage();
+      exit;
+  }
+
+  $statement = $pdo->prepare("UPDATE tblVisitorsCheckIN SET checkOUT = :checkOut WHERE ID = :id AND checkOUT IS NULL");
+
+  $statement->bindValue(":id", $_POST['visitorid']);
+  $statement->bindValue(":checkOut", date('Y-m-d\TH:i:s'));
+
+  $statement->execute();
+  $no = $statement->rowCount();
+
+  echo $no;
 }
 
 

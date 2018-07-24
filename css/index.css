@@ -98,8 +98,16 @@ ul {
   cursor: pointer;
 }
 
+/* REGISTER DESCRIPTION */
+.registerDescription {
+  position: absolute;
+  bottom: 190px;
+  right: 50px;
+  font-size: 30px;
+  text-transform: uppercase;
+}
 
-/* ANMELDE BUTTON */
+/* REGISTER BUTTON */
 .btnRegister {
   position: absolute;
   bottom: 50px;
@@ -107,7 +115,15 @@ ul {
   padding: 20px 60px;
 }
 
-/* ANMELDE MODAL */
+/* CHECKOUT BUTTON */
+.btnCheckOut {
+  position: absolute;
+  bottom: 50px;
+  right: 620px;
+  padding: 20px 60px;
+}
+
+/* MODAL */
 .modal-dialog {
   width: 700px;
   margin: 50vh auto;

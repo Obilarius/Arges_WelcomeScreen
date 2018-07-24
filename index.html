@@ -31,62 +31,19 @@
         </tr>
       </thead>
       <tbody id="dynTermin">
-
-        <!-- AB HIER MUSS DYNAMISCH BEFÜLLT WERDEN -->
-        <!-- <tr class="dynTr">
-          <td class="col col1">08:30</td>
-          <td class="col col2">
-            <ul>
-              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Herr Kalimero van Kallenbach" data-company="Technolas Perfect Vision GmbH">Mr. Kalimero van Kallenbach</span></li>
-              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Kallenbach" data-company="Technolas Perfect Vision GmbH">Mr. Kallenbach</span></li>
-              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Langhals" data-company="Technolas Perfect Vision GmbH">Mr. Langhals</span></li>
-              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Sawtzki" data-company="Technolas Perfect Vision GmbH">Mr. Sawetzki</span></li>
-              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Kallenbach" data-company="Technolas Perfect Vision GmbH">Mr. Kallenbach</span></li>
-              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Mr. Bambidibu" data-company="Technolas Perfect Vision GmbH">Mr. Bambidibu</span></li>
-            </ul>
-          </td>
-          <td class="col col3">Technolas Perfect Vision GmbH sdouhwr</td>
-          <td class="col col4">
-            <img src="http://intranet/SiteCollectionImages/WelcomeLogo/TPV.png" alt="">
-          </td>
-        </tr>
-
-        <tr class="dynTr">
-          <td class="col col1">10:30</td>
-          <td class="col col2"></td>
-          <td class="col col3">Fartwind</td>
-          <td class="col col4">
-            <img src="https://www.fartwind.de/fartwind.jpg" alt="">
-          </td>
-        </tr>
-
-        <tr class="dynTr">
-          <td class="col col1">16:00</td>
-          <td class="col col2">
-            <ul>
-              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Herr Walzenbach" data-company="Echsenmensch Inc.">Herr Walzenbach</span></li>
-              <li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter" data-name="Herr Weiss" data-company="Echsenmensch Inc.">Herr Weiss</span></li>
-            </ul>
-          </td>
-          <td class="col col3">Echsenmensch Inc.</td>
-          <td class="col col4">
-            <img src="https://www.echsenmensch.de/echsenmensch.jpg" alt="">
-          </td>
-        </tr> -->
-        <!-- /ENDE DYNAMISCHER INHALT -->
-
+        <!-- Dynamische Termine werden hier erstellt -->
       </tbody>
     </table>
 
+    <div class="registerDescription">Click name or Button for Registration</div>
 
+    <!-- REGISTER BUTTON -->
+    <button type="button" class="btn btn-primary btnRegister font42" data-toggle="modal" data-target="#registerModalCenter">REGISTRATION</button>
 
-    <!-- ANMELDUNG -->
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary btnRegister font42" data-toggle="modal" data-target="#registerModalCenter">
-      REGISTRATION
-    </button>
+    <!-- CHECKOUT BUTTON -->
+    <button type="button" class="btn btn-primary btnCheckOut font42" data-toggle="modal" data-target="#checkOutModalCenter">CHECKOUT</button>
 
-    <!-- Modal -->
+    <!-- REGISTER MODAL -->
     <div class="modal fade" id="registerModalCenter" tabindex="-1" role="dialog" aria-labelledby="registerModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -118,6 +75,31 @@
       </div>
     </div>
 
+    <!-- CHECKOUT MODAL -->
+    <div class="modal fade" id="checkOutModalCenter" tabindex="-1" role="dialog" aria-labelledby="checkOutModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="checkOutModalLongTitle">CheckOut</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <input class="form-control form-control-lg inputCheckOutId" type="text" placeholder="VisitorID">
+              </div>
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            <button type="button" class="btn btn-primary" id="btnRegisterCheckOut">CheckOut</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
   </body>
@@ -133,12 +115,14 @@
   $( document ).ready(function() {
     $("#date").html(datum);
 
+    // REGISTER MODAL SHOW FUNCTION
     $('#registerModalCenter').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget) // Button that triggered the modal
 
       if (button[0].className == "userRegisterLink") {
         let name = button.data('name') // Extract info from data-* attributes
         let company = button.data('company')
+        let host = button.data('host')
         let appID = button.data('appID')
         let location = button.data('location')
 
@@ -147,7 +131,7 @@
         modal.find('.modal-title').text('Welcome ' + name)
         modal.find('.modal-body .inputName').val(name).attr("readonly", true)
         modal.find('.modal-body .inputCompany').val(company).attr("readonly", true)
-        modal.find('.modal-body .inputAppointment').val("").attr("readonly", false)
+        modal.find('.modal-body .inputAppointment').val(host).attr("readonly", true)
         modal.find('.modal-body').data({ appID: button.data('appid'), location: button.data('location'), host: button.data('host') });
       } else {
         // Update the modal's content.
@@ -160,10 +144,10 @@
       }
     })
 
-    // BUTTON REGISTER ## SCHREIBT IN DATENBANK UND ERZEUGT DAS LABEL
+    // REGISTER MODAL BUTTON ## SCHREIBT IN DATENBANK UND ERZEUGT DAS LABEL
     $('#btnRegisterCheckIn').on('click', function (event) {
       // ÜBERGABE AN DIE DATENBANK
-      $.post("mysql.php",
+      $.post("mssql.php",
       {
           name: $('.modal-body .inputName').val(),
           company: $('.modal-body .inputCompany').val(),
@@ -173,7 +157,7 @@
       }, function(id, status){
         // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
         // TODO: Print auf neuen Drucker (print.html) umleiten
-        var url = 'printTest.html';
+        var url = 'print.html';
         url += '?name=' + $('.modal-body .inputName').val();
         url += '&company=' + $('.modal-body .inputCompany').val();
         url += '&date=' + getDatum();
@@ -181,9 +165,21 @@
         // console.log(url);
         window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
       });
-
       $('#registerModalCenter').modal('hide');
+    })
 
+    // REGISTER MODAL BUTTON ## SCHREIBT IN DATENBANK UND ERZEUGT DAS LABEL
+    $('#btnRegisterCheckOut').on('click', function (event) {
+      // ÜBERGABE AN DIE DATENBANK
+      // TODO: CheckOut Ausgabe verändern
+      $.post("mssql.php", { visitorid: $('.modal-body .inputCheckOutId').val().trim() }, function(data){
+        if (data) {
+          $(".modal-body").html("Sie wurden ausgeloggt")
+        } else {
+          $(".modal-body").html("Sie sind bereits Ausgeloggt")
+        }
+      });
+      $('#checkOutModalCenter').delay(1000).modal('hide');
     })
 
 
@@ -210,34 +206,21 @@
 
           // NAME IN ARRAY ZERLEGEN
           var names = termin._Visitors.replace( /\r\n/gm, "#" ).split("#");
-          const regex = /div>(.*?)<\/div/gm;
-          let m;
-          while ((m = regex.exec(termin._Visitors)) !== null) {
-              // This is necessary to avoid infinite loops with zero-width matches
-              if (m.index === regex.lastIndex) {
-                  regex.lastIndex++;
-              }
-              // The result can be accessed through the `m`-variable.
-              m.forEach((name, groupIndex) => {
-                if (groupIndex == 1) {
-                  // console.log(termin);
 
-                  let company = termin._Company.replace(/[<br>]*<[/]*div[^>]*>/gi, "");
-                  company = company.replace(/<[/]*br[^>]*>/gi, " - ");
+          names.forEach( function(name) {
+            let company = termin._Company.replace(/[<br>]*<[/]*div[^>]*>/gi, "");
+            company = company.replace(/<[/]*br[^>]*>/gi, " - ");
 
-                  terminTemplate += '<li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter"';
-                  terminTemplate += 'data-name="'+ name +'"';
-                  terminTemplate += 'data-company="'+ company +'"';
-                  terminTemplate += 'data-appid="'+ termin._ID +'"';
-                  terminTemplate += 'data-location="'+ termin._Location +'"';
-                  // TODO: HOST aus XML an Button hängen
-                  // terminTemplate += 'data-host="'+ termin._Host +'"';
-                  terminTemplate += 'data-host="Host Name"';
+            terminTemplate += '<li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter"';
+            terminTemplate += 'data-name="'+ name +'"';
+            terminTemplate += 'data-company="'+ company +'"';
+            terminTemplate += 'data-appid="'+ termin._ID +'"';
+            terminTemplate += 'data-location="'+ termin._Location +'"';
+            terminTemplate += 'data-host="'+ termin._Host +'"';
+            terminTemplate += 'data-host="Host Name"';
 
-                  terminTemplate += '>'+ name +'</span></li>';
-                }
-              });
-          }
+            terminTemplate += '>'+ name +'</span></li>';
+          });
 
           terminTemplate += '</ul></td><td class="col col3">'+ termin._Company +'</td><td class="col col4"><img src="'+ termin._WelcomeLogo +'" alt=""></td></tr>';
 
@@ -245,9 +228,7 @@
         })
       }, "text");
     // ENDE DYNAMISCHE TERMINE
-    // }, 1000);
-
-
+    // }, 50000);
 
   });
 
