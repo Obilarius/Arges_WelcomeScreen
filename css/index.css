@@ -17,7 +17,7 @@ body {
   height: 330px;
   vertical-align: middle;
   text-align: center;
-  width: 3078px;
+  width: 3334px;
   color: #fff;
 }
 
@@ -37,7 +37,7 @@ body {
 /* TABLE */
 table {
   table-layout: fixed;
-  width: 3078px;
+  width: 3334px;
   position: absolute;
   top: 330px;
   left: 762px;
