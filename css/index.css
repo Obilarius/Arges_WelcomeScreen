@@ -101,32 +101,41 @@ ul {
 /* REGISTER DESCRIPTION */
 .registerDescription {
   position: absolute;
-  bottom: 190px;
-  right: 50px;
-  font-size: 30px;
+  bottom: 310px;
+  left: 20px;
+  font-size: 30.7px;
   text-transform: uppercase;
 }
 
 /* REGISTER BUTTON */
 .btnRegister {
   position: absolute;
-  bottom: 50px;
-  right: 50px;
-  padding: 20px 60px;
+  bottom: 170px;
+  left: 20px;
+  padding: 20px 0px;
+  width: 686px;
 }
 
 /* CHECKOUT BUTTON */
 .btnCheckOut {
   position: absolute;
-  bottom: 50px;
-  right: 620px;
-  padding: 20px 60px;
+  bottom: 20px;
+  left: 20px;
+  padding: 20px 0px;
+  width: 686px;
 }
 
 /* MODAL */
+.modal-open .modal {
+    overflow: hidden;
+}
 .modal-dialog {
-  width: 700px;
+  width: 686px;
   margin: 50vh auto;
+  position: absolute;
+  left: 20px;
+  bottom: -750px;
+
 }
 .modal-title {
   font-size: 30pt;
@@ -140,4 +149,7 @@ ul {
 }
 .modal-footer button {
   /* font-size: 25pt; */
+}
+.checkout-msg {
+  font-size: 24pt;
 }

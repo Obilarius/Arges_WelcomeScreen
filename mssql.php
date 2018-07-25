@@ -52,6 +52,7 @@ if (isset($_POST['visitorid'])) {
   $statement->execute();
   $no = $statement->rowCount();
 
+  // gibt Anzahl bearbeiteter Zeilen zurück (0 = ist bereits ausgeloggt, 1 = wurde erfolgreich ausgeloggt)
   echo $no;
 }
 

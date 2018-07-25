@@ -7,9 +7,10 @@
   <body>
     <img src="img/printVorlage.svg">
     <div id="date"></div>
+    <div class="visitorId"></div>
     <img class="datamatrix" src="">
     <div id="nameWrapper"><span id="name"></span>
-      <!-- <img src="https://www.echsenmensch.de/echsenmensch.jpg" alt=""> -->
+      <!-- <img src="FIRMENLOGO" alt=""> -->
       <div id="company"></div>
     </div>
   </body>
@@ -37,15 +38,16 @@
 
         if (name == "code") {
           $(".datamatrix").attr("src", "http://bwipjs-api.metafloor.com/?bcid=datamatrix&text=" + wert)
+          $(".visitorId").html(wert);
         } else {
           $("#" + name).html(wert);
         }
       }
     }
 
-    // window.print();
-    // TODO: Window.Close Aktivieren
-    // window.close();
+    // TODO: window.close & window.print Aktivieren
+    window.print();
+    window.close();
   });
 </script>
 
@@ -60,6 +62,13 @@
     width: 68mm;
     height: 45mm;
     /* border: solid 1px black; */
+  }
+  .visitorId {
+    position: absolute;
+    top: 17px;
+    right: 35px;
+    font-size: 16px;
+    font-weight: normal;
   }
   .datamatrix {
     position: absolute;

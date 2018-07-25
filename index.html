@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/index.css">
 
     <div class="sidebar">
-      <img src="img/arges_welcome_monitor_bildleiste.jpg" alt="">
+      <img src="img/arges_welcome_monitor_bildleiste2.jpg" alt="">
     </div>
     <div class="header">
       <span>Welcome to </span><span style="font-weight: 700">ARGES</span>
@@ -85,8 +85,9 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <form>
+          <div class="modal-body checkout-body">
+            <div class="checkout-msg"></div>
+            <form class="checkout-form">
               <div class="form-group">
                 <input class="form-control form-control-lg inputCheckOutId" type="text" placeholder="VisitorID">
               </div>
@@ -94,7 +95,6 @@
 
           </div>
           <div class="modal-footer">
-            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
             <button type="button" class="btn btn-primary" id="btnRegisterCheckOut">CheckOut</button>
           </div>
         </div>
@@ -144,7 +144,7 @@
       }
     })
 
-    // REGISTER MODAL BUTTON ## SCHREIBT IN DATENBANK UND ERZEUGT DAS LABEL
+    // REGISTER MODAL BUTTON ## INSERT IN DATENBANK UND ERZEUGT DAS LABEL
     $('#btnRegisterCheckIn').on('click', function (event) {
       // ÜBERGABE AN DIE DATENBANK
       $.post("mssql.php",
@@ -156,30 +156,43 @@
           host: $('.modal-body .inputAppointment').val()
       }, function(id, status){
         // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
-        // TODO: Print auf neuen Drucker (print.html) umleiten
         var url = 'print.html';
         url += '?name=' + $('.modal-body .inputName').val();
         url += '&company=' + $('.modal-body .inputCompany').val();
         url += '&date=' + getDatum();
         url += '&code=' + $.trim(id);
-        // console.log(url);
+
         window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
       });
       $('#registerModalCenter').modal('hide');
     })
 
-    // REGISTER MODAL BUTTON ## SCHREIBT IN DATENBANK UND ERZEUGT DAS LABEL
+    // CHECKOUT MODAL SHOW FUNCTION
+    $('#checkOutModalCenter').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget) // Button that triggered the modal
+      console.log("Zeige Modal");
+      // Update the modal's content.
+      let modal = $(this)
+      modal.find('.checkout-body .inputCheckOutId').val("").show();
+      modal.find('.checkout-body .checkout-msg').html("").hide();
+    })
+
+    // CHECKOUT MODAL BUTTON ## UPDATE IN DATENBANK
     $('#btnRegisterCheckOut').on('click', function (event) {
       // ÜBERGABE AN DIE DATENBANK
-      // TODO: CheckOut Ausgabe verändern
       $.post("mssql.php", { visitorid: $('.modal-body .inputCheckOutId').val().trim() }, function(data){
-        if (data) {
-          $(".modal-body").html("Sie wurden ausgeloggt")
+        $('.checkout-body .inputCheckOutId').val("").hide();
+
+        if (data == 1) {
+          $('.checkout-body .checkout-msg').html("You have been successfully logged out").show();
         } else {
-          $(".modal-body").html("Sie sind bereits Ausgeloggt")
+          $('.checkout-body .checkout-msg').html("You are already logged out").show();
         }
       });
-      $('#checkOutModalCenter').delay(1000).modal('hide');
+
+      window.setTimeout(function(){
+         $('#checkOutModalCenter').modal('hide');
+      }, 1500);
     })
 
 
