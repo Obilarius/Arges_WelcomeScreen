@@ -115,6 +115,7 @@
 
   $( document ).ready(function() {
     $("#date").html(datum);
+    dynAppointment(); // Initiale befüllung mit Terminen
 
     // REGISTER MODAL SHOW FUNCTION
     $('#registerModalCenter').on('show.bs.modal', function (event) {
@@ -220,52 +221,56 @@
     })
 
 
-    // DYNAMISCHE TERMINE
-    // window.setInterval(function()  {
-      $.post("readFile.php",
-      {
-        url: "//filer/Public/Datenbankentwicklung/ARGESVisitors/TEST_ARGESVisitorsList.xml"
-      }, function(data, status){
-        xotree = new XML.ObjTree()
-        var jsonObj = xotree.parseXML( data );
-        jsonObj = jsonObj.Report.table1.Detail_Collection.Detail
+    // DYNAMISCHE TERMINE MIT INTERVAL
+    window.setInterval(function()  {
+      dynAppointment();
+    }, 5000);
 
-        if (!Array.isArray(jsonObj)) {
-          var temp = jsonObj;
-          var jsonObj = new Array;
-          jsonObj.push(temp);
-        }
+  }); // Ende Document Ready
 
-        $("#dynTermin").html("");
-        $.each(jsonObj, function( key, termin ) {
-          var terminTemplate = '<tr class="dynTr"><td class="col col1">'+ termin._Start_Time +'</td><td class="col col2"><ul>';
+  function dynAppointment () {
+    $.post("readFile.php",
+    {
+      url: "//filer/Public/Datenbankentwicklung/ARGESVisitors/TEST_ARGESVisitorsList.xml"
+    }, function(data, status){
+      xotree = new XML.ObjTree()
+      var jsonObj = xotree.parseXML( data );
+      jsonObj = jsonObj.Report.table1.Detail_Collection.Detail
 
-          // NAME IN ARRAY ZERLEGEN
-          var names = termin._Visitors.replace( /\r\n/gm, "#" ).split("#");
+      if (!Array.isArray(jsonObj)) {
+        var temp = jsonObj;
+        var jsonObj = new Array;
+        jsonObj.push(temp);
+      }
 
-          names.forEach( function(name) {
-            let company = termin._Company.replace(/[<br>]*<[/]*div[^>]*>/gi, "");
-            company = company.replace(/<[/]*br[^>]*>/gi, " - ");
+      $("#dynTermin").html("");
+      $.each(jsonObj, function( key, termin ) {
+        var terminTemplate = '<tr class="dynTr"><td class="col col1">'+ termin._Start_Time +'</td><td class="col col2"><ul>';
 
-            terminTemplate += '<li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter"';
-            terminTemplate += 'data-name="'+ name +'"';
-            terminTemplate += 'data-company="'+ company +'"';
-            terminTemplate += 'data-appid="'+ termin._ID +'"';
-            terminTemplate += 'data-location="'+ termin._Location +'"';
-            terminTemplate += 'data-host="'+ termin._Host +'"';
-            terminTemplate += 'data-host="Host Name"';
+        // NAME IN ARRAY ZERLEGEN
+        var names = termin._Visitors.replace( /\r\n/gm, "#" ).split("#");
 
-            terminTemplate += '>'+ name +'</span></li>';
-          });
+        names.forEach( function(name) {
+          let company = termin._Company.replace(/[<br>]*<[/]*div[^>]*>/gi, "");
+          company = company.replace(/<[/]*br[^>]*>/gi, " - ");
 
-          terminTemplate += '</ul></td><td class="col col3">'+ termin._Company +'</td><td class="col col4"><img src="'+ termin._WelcomeLogo +'" alt=""></td></tr>';
+          terminTemplate += '<li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter"';
+          terminTemplate += 'data-name="'+ name +'"';
+          terminTemplate += 'data-company="'+ company +'"';
+          terminTemplate += 'data-appid="'+ termin._ID +'"';
+          terminTemplate += 'data-location="'+ termin._Location +'"';
+          terminTemplate += 'data-host="'+ termin._Host +'"';
+          terminTemplate += 'data-host="Host Name"';
 
-          $("#dynTermin").append(terminTemplate);
-        })
-      });
-    // }, 1000);
+          terminTemplate += '>'+ name +'</span></li>';
+        });
 
-  });
+        terminTemplate += '</ul></td><td class="col col3">'+ termin._Company +'</td><td class="col col4"><img src="'+ termin._WelcomeLogo +'" alt=""></td></tr>';
+
+        $("#dynTermin").append(terminTemplate);
+      })
+    });
+  } // Ende dynAppointment
 
   </script>
 </html>
