@@ -27,7 +27,7 @@
           <!-- DYNAMISCHES DATUM -->
           <td class="col2 font42 widthCol2" id="date">Datum</td>
           <td class="widthCol3">
-            <img src="img/arges_welcome_monitor_sehstrahl_rechts.png" alt="">
+            <img src="img/arges_welcome_monitor_sehstrahl_rechts_lang.png" alt="">
           </td>
         </tr>
       </thead>
@@ -55,15 +55,15 @@
             </button>
           </div>
           <div class="modal-body">
-            <form>
+            <form novalidate>
               <div class="form-group">
-                <input class="form-control form-control-lg inputName" type="text" placeholder="Name">
+                <input class="form-control form-control-lg inputName" type="text" placeholder="*Name">
               </div>
               <div class="form-group">
-                <input class="form-control form-control-lg inputCompany" type="text" placeholder="Company">
+                <input class="form-control form-control-lg inputCompany" type="text" placeholder="*Company / Firma">
               </div>
               <div class="form-group">
-                <input class="form-control form-control-lg inputAppointment" type="text" placeholder="Host">
+                <input class="form-control form-control-lg inputAppointment" type="text" placeholder="Host / Gastgeber">
               </div>
             </form>
 
@@ -118,7 +118,11 @@
 
     // REGISTER MODAL SHOW FUNCTION
     $('#registerModalCenter').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget) // Button that triggered the modal
+      $('.inputName').focus();
+      var button = $(event.relatedTarget); // Button that triggered the modal
+
+      $('.modal-body .inputName').removeClass("is-invalid");
+      $('.modal-body .inputCompany').removeClass("is-invalid");
 
       if (button[0].className == "userRegisterLink") {
         let name = button.data('name') // Extract info from data-* attributes
@@ -144,34 +148,53 @@
         modal.find('.modal-body').data({ appID: "", location: "", host: "" });
       }
     })
+    // REGISTER MODAL SET FOCUS
+    $('#registerModalCenter').on('shown.bs.modal', function (event) {
+      if ($('.modal-body .inputName').val() == "") {
+        $('.inputName').focus();
+      }
+    })
 
     // REGISTER MODAL BUTTON ## INSERT IN DATENBANK UND ERZEUGT DAS LABEL
     $('#btnRegisterCheckIn').on('click', function (event) {
-      // ÜBERGABE AN DIE DATENBANK
-      $.post("mssql.php",
-      {
-          name: $('.modal-body .inputName').val(),
-          company: $('.modal-body .inputCompany').val(),
-          appid: $('.modal-body').data("appID"),
-          location: $('.modal-body').data("location"),
-          host: $('.modal-body .inputAppointment').val()
-      }, function(id, status){
-        // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
-        var url = 'print.html';
-        url += '?name=' + $('.modal-body .inputName').val();
-        url += '&company=' + $('.modal-body .inputCompany').val();
-        url += '&date=' + getDatum();
-        url += '&code=' + $.trim(id);
+      var name = $('.modal-body .inputName').val();
+      var company = $('.modal-body .inputCompany').val();
 
-        window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
-      });
-      $('#registerModalCenter').modal('hide');
+      if ( name == "" || company == "" ) {
+        if ( name == "" ) {
+          $('.modal-body .inputName').addClass("is-invalid");
+        }
+        if ( company == "" ) {
+          $('.modal-body .inputCompany').addClass("is-invalid");
+        }
+      } else {
+        // ÜBERGABE AN DIE DATENBANK
+        $.post("mssql.php",
+        {
+            name: $('.modal-body .inputName').val(),
+            company: $('.modal-body .inputCompany').val(),
+            appid: $('.modal-body').data("appID"),
+            location: $('.modal-body').data("location"),
+            host: $('.modal-body .inputAppointment').val()
+        }, function(id, status){
+          // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
+          var url = 'print.html';
+          url += '?name=' + $('.modal-body .inputName').val();
+          url += '&company=' + $('.modal-body .inputCompany').val();
+          url += '&date=' + getDatum();
+          url += '&code=' + $.trim(id);
+
+          window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
+        });
+        $('#registerModalCenter').modal('hide');
+      }
     })
 
     // CHECKOUT MODAL SHOW FUNCTION
-    $('#checkOutModalCenter').on('show.bs.modal', function (event) {
+    $('#checkOutModalCenter').on('shown.bs.modal', function (event) {
       var button = $(event.relatedTarget) // Button that triggered the modal
-      console.log("Zeige Modal");
+      $('.inputCheckOutId').focus();
+
       // Update the modal's content.
       let modal = $(this)
       modal.find('.checkout-body .inputCheckOutId').val("").show();
