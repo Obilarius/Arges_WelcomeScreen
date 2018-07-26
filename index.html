@@ -224,17 +224,18 @@
     // DYNAMISCHE TERMINE MIT INTERVAL
     window.setInterval(function()  {
       dynAppointment();
-    }, 5000);
+    }, 60000);
 
   }); // Ende Document Ready
 
   function dynAppointment () {
     $.post("readFile.php",
     {
-      url: "//filer/Public/Datenbankentwicklung/ARGESVisitors/TEST_ARGESVisitorsList.xml"
+      url: "//filer/Public/Datenbankentwicklung/ARGESVisitors/ARGESVisitorsList.xml"
     }, function(data, status){
       xotree = new XML.ObjTree()
       var jsonObj = xotree.parseXML( data );
+      console.log(jsonObj);
       jsonObj = jsonObj.Report.table1.Detail_Collection.Detail
 
       if (!Array.isArray(jsonObj)) {
