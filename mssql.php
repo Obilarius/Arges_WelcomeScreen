@@ -3,12 +3,11 @@
 
 // CHECKIN
 if( isset($_POST['name'], $_POST['company']) ) {
-  // $pdo = new PDO('mysql:host=localhost;dbname=test', 'username', 'password');
   try {
     $pdo = new PDO("sqlsrv:Server=dionysos;Database=Visitors", NULL, NULL);
     $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
   } catch (PDOException $e) {
-      // echo "Failed to get DB handle: " . $e->getMessage();
+      writeLog("Failed to get DB handle: " . $e->getMessage());
       exit;
   }
 
@@ -40,7 +39,7 @@ if (isset($_POST['visitorid'])) {
     $pdo = new PDO("sqlsrv:Server=dionysos;Database=Visitors", NULL, NULL);
     $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
   } catch (PDOException $e) {
-      echo "Failed to get DB handle: " . $e->getMessage();
+      writeLog("Failed to get DB handle: " . $e->getMessage());
       exit;
   }
 
@@ -54,6 +53,46 @@ if (isset($_POST['visitorid'])) {
 
   // gibt Anzahl bearbeiteter Zeilen zurück (0 = ist bereits ausgeloggt, 1 = wurde erfolgreich ausgeloggt)
   echo $no;
+}
+
+
+function writeLog ($data) {
+  $format = "csv"; //Moeglichkeiten: csv und txt
+
+  $datum_zeit = date("Y/m/d H:i:s");
+
+  $monate = array(1=>"Januar", 2=>"Februar", 3=>"Maerz", 4=>"April", 5=>"Mai", 6=>"Juni", 7=>"Juli", 8=>"August", 9=>"September", 10=>"Oktober", 11=>"November", 12=>"Dezember");
+  $monat = date("n");
+  $jahr = date("y");
+  $jahrLang = date("Y");
+
+  $dateiname="logs/log_". $jahrLang ."_" . $monate[$monat] . "." . $format;
+
+  $header = array("Datum", "Daten");
+  $infos = array($datum_zeit, $data);
+
+  if($format == "csv") {
+   $eintrag= '"'.implode('", "', $infos).'"';
+  } else {
+   $eintrag = implode("\t", $infos);
+  }
+
+  $write_header = !file_exists($dateiname);
+
+  $datei=fopen($dateiname,"a");
+
+  if($write_header) {
+   if($format == "csv") {
+   $header_line = '"'.implode('", "', $header).'"';
+   } else {
+   $header_line = implode("\t", $header);
+   }
+
+   fputs($datei, $header_line."\n");
+  }
+
+  fputs($datei,$eintrag."\n");
+  fclose($datei);
 }
 
 

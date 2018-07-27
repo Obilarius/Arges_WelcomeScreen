@@ -137,7 +137,11 @@
         modal.find('.modal-title').text('Welcome ' + name)
         modal.find('.modal-body .inputName').val(name).attr("readonly", true)
         modal.find('.modal-body .inputCompany').val(company).attr("readonly", true)
-        modal.find('.modal-body .inputAppointment').val(host).attr("readonly", true)
+        if (host) {
+          modal.find('.modal-body .inputAppointment').val(host).attr("readonly", true)
+        } else {
+          modal.find('.modal-body .inputAppointment').val("").attr("readonly", false)
+        }
         modal.find('.modal-body').data({ appID: button.data('appid'), location: button.data('location'), host: button.data('host') });
       } else {
         // Update the modal's content.
@@ -179,6 +183,7 @@
             host: $('.modal-body .inputAppointment').val()
         }, function(id, status){
           // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
+
           var url = 'print.html';
           url += '?name=' + $('.modal-body .inputName').val();
           url += '&company=' + $('.modal-body .inputCompany').val();
@@ -235,7 +240,6 @@
     }, function(data, status){
       xotree = new XML.ObjTree()
       var jsonObj = xotree.parseXML( data );
-      console.log(jsonObj);
       jsonObj = jsonObj.Report.table1.Detail_Collection.Detail
 
       if (!Array.isArray(jsonObj)) {
@@ -243,6 +247,8 @@
         var jsonObj = new Array;
         jsonObj.push(temp);
       }
+
+      // console.log(jsonObj);
 
       $("#dynTermin").html("");
       $.each(jsonObj, function( key, termin ) {
@@ -254,13 +260,14 @@
         names.forEach( function(name) {
           let company = termin._Company.replace(/[<br>]*<[/]*div[^>]*>/gi, "");
           company = company.replace(/<[/]*br[^>]*>/gi, " - ");
+          let host = ( typeof termin._Host === "undefined" ? null : termin._Host.trim() )
 
           terminTemplate += '<li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter"';
           terminTemplate += 'data-name="'+ name +'"';
           terminTemplate += 'data-company="'+ company +'"';
           terminTemplate += 'data-appid="'+ termin._ID +'"';
           terminTemplate += 'data-location="'+ termin._Location +'"';
-          terminTemplate += 'data-host="'+ termin._Host +'"';
+          terminTemplate += 'data-host="'+ host +'"';
           terminTemplate += 'data-host="Host Name"';
 
           terminTemplate += '>'+ name +'</span></li>';

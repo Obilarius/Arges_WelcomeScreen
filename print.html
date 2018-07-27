@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
   </head>
   <body>
@@ -22,8 +22,10 @@
 
   $( document ).ready(function() {
 
+    console.log("UTF8 -- " + decodeURI(location.search));
+
     if (location.search != '') {
-      let wertestring = location.search.slice(1);
+      let wertestring = decodeURI(location.search.slice(1));
       let paare = wertestring.split("&");
       let paar, name, wert;
       for (var i = 0; i < paare.length; i++) {
