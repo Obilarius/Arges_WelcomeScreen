@@ -8,7 +8,8 @@
     <img src="img/printVorlage.svg">
     <div id="date"></div>
     <div class="visitorId"></div>
-    <img class="datamatrix" src="">
+    <div class="datamatrix">Hallo</div>
+    <!-- <img class="datamatrix" src=""> -->
     <div id="nameWrapper"><span id="name"></span>
       <!-- <img src="FIRMENLOGO" alt=""> -->
       <div id="company"></div>
@@ -18,11 +19,12 @@
 
 
 <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="script/datamatrix/datamatrix.js"></script>
 <script type="text/javascript">
 
   $( document ).ready(function() {
 
-    console.log("UTF8 -- " + decodeURI(location.search));
+    // console.log("UTF8 -- " + decodeURI(location.search));
 
     if (location.search != '') {
       let wertestring = decodeURI(location.search.slice(1));
@@ -39,7 +41,8 @@
         wert = unescape(wert).replace("Â", "");
 
         if (name == "code") {
-          $(".datamatrix").attr("src", "http://bwipjs-api.metafloor.com/?bcid=datamatrix&text=" + wert)
+          // $(".datamatrix").attr("src", "http://bwipjs-api.metafloor.com/?bcid=datamatrix&text=" + wert)
+          $(".datamatrix").barcode(wert, "datamatrix", {output: "bmp", moduleSize: "3"});
           $(".visitorId").html(wert);
         } else {
           $("#" + name).html(wert);
@@ -47,8 +50,8 @@
       }
     }
 
-    window.print();
-    window.close();
+    // window.print();
+    // window.close();
   });
 </script>
 
@@ -73,10 +76,10 @@
   }
   .datamatrix {
     position: absolute;
-    top: 20px;
+    top: 18px;
     right: 0px;
-    width: 8mm;
-    height: 8mm;
+    /* width: 8mm;
+    height: 8mm; */
   }
   #date {
     position: absolute;
