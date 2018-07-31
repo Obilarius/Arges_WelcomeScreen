@@ -6,9 +6,10 @@
   </head>
   <body>
     <img src="img/printVorlage.svg">
+    <div id="host"></div>
     <div id="date"></div>
     <div class="visitorId"></div>
-    <div class="datamatrix">Hallo</div>
+    <div class="datamatrix"></div>
     <!-- <img class="datamatrix" src=""> -->
     <div id="nameWrapper"><span id="name"></span>
       <!-- <img src="FIRMENLOGO" alt=""> -->
@@ -20,6 +21,7 @@
 
 <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="script/datamatrix/datamatrix.js"></script>
+<script type="text/javascript" src="script/hashid/hashids.min.js"></script>
 <script type="text/javascript">
 
   $( document ).ready(function() {
@@ -41,9 +43,15 @@
         wert = unescape(wert).replace("Â", "");
 
         if (name == "code") {
+          var hashids = new Hashids("this is my salt", 6, "1234567890ABCDEF");
+          var hashWert = hashids.encode(parseInt(wert));
+          var numbers = hashids.decode(hashWert);
+
           // $(".datamatrix").attr("src", "http://bwipjs-api.metafloor.com/?bcid=datamatrix&text=" + wert)
-          $(".datamatrix").barcode(wert, "datamatrix", {output: "bmp", moduleSize: "3"});
-          $(".visitorId").html(wert);
+          $(".datamatrix").barcode(hashWert, "datamatrix", {output: "bmp", moduleSize: "3"});
+          $(".visitorId").html(hashWert);
+        } else if(name == "host") {
+          $("#" + name).html("<span>Host:</span><br>" + wert);
         } else {
           $("#" + name).html(wert);
         }
@@ -67,12 +75,25 @@
     height: 45mm;
     /* border: solid 1px black; */
   }
+  #host {
+    position: absolute;
+    top: 40px;
+    left: 70px;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 10px;
+  }
+  #host span {
+    font-size: 8px;
+    line-height: 8px;
+  }
   .visitorId {
     position: absolute;
     top: 17px;
-    right: 35px;
-    font-size: 16px;
+    right: 48px;
+    font-size: 14px;
     font-weight: normal;
+    text-align: right;
   }
   .datamatrix {
     position: absolute;

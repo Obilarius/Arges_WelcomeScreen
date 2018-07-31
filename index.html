@@ -189,6 +189,10 @@
           url += '&company=' + $('.modal-body .inputCompany').val();
           url += '&date=' + getDatum();
           url += '&code=' + $.trim(id);
+          if ($('.modal-body .inputAppointment').val()) {
+            url += '&host=' + $('.modal-body .inputAppointment').val();
+          }
+
 
           window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
         });
