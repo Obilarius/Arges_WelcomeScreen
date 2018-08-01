@@ -9,7 +9,7 @@ function getDatumLang() {
   let y = formattedDate.getFullYear();
   let dayOfWeek = tage[day];
 
-  if(day < 10){ day = '0' + day; }
+  if(date < 10){ date = '0' + date; }
   if(m   < 10){ m   = '0' + m; }
 
   let retString = dayOfWeek + " " + date + "." + m + "." + y

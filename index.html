@@ -108,6 +108,7 @@
   <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="script/bootstrap.js"></script>
   <script type="text/javascript" src="script/ObjTree.js"></script>
+  <script type="text/javascript" src="script/hashid/hashids.min.js"></script>
   <script type="text/javascript" src="script/func.js"></script>
   <script type="text/javascript">
 
@@ -213,8 +214,10 @@
 
     // CHECKOUT MODAL BUTTON ## UPDATE IN DATENBANK
     $('#btnRegisterCheckOut').on('click', function (event) {
+      var hashids = new Hashids("this is my salt", 6, "1234567890ABCDEF");
+      var id = hashids.decode( $('.modal-body .inputCheckOutId').val().trim() );
       // ÜBERGABE AN DIE DATENBANK
-      $.post("mssql.php", { visitorid: $('.modal-body .inputCheckOutId').val().trim() }, function(data){
+      $.post("mssql.php", { visitorid: id[0] }, function(data){
         $('.checkout-body .inputCheckOutId').val("").hide();
 
         if (data == 1) {
@@ -244,6 +247,10 @@
     }, function(data, status){
       xotree = new XML.ObjTree()
       var jsonObj = xotree.parseXML( data );
+      if (!jsonObj.Report.table1) {
+        return;
+        // Hier Funktion wenn keine Termine in XML sind
+      }
       jsonObj = jsonObj.Report.table1.Detail_Collection.Detail
 
       if (!Array.isArray(jsonObj)) {
