@@ -116,6 +116,37 @@ ul {
   width: 686px;
 }
 
+.btnRegister i {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.03) 1%, rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0.85) 70%, rgba(255, 255, 255, 0.85) 71%, rgba(255, 255, 255, 0) 100%);
+  width: 15%;
+  height: 100%;
+  transform: skew(-10deg, 0deg);
+  animation: btnShiny 3s infinite 1s;
+}
+
+@keyframes btnShiny {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.0;
+  }
+  48% {
+    opacity: 0.2;
+  }
+  80% {
+    opacity: 0.0;
+  }
+  100% {
+    left: 82%;
+  }
+}
+
 /* CHECKOUT BUTTON */
 .btnCheckOut {
   position: absolute;
