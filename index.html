@@ -259,14 +259,16 @@
         jsonObj.push(temp);
       }
 
-      // console.log(jsonObj);
-
       $("#dynTermin").html("");
       $.each(jsonObj, function( key, termin ) {
         var terminTemplate = '<tr class="dynTr"><td class="col col1">'+ termin._Start_Time +'</td><td class="col col2"><ul>';
 
         // NAME IN ARRAY ZERLEGEN
-        var names = termin._Visitors.replace( /\r\n/gm, "#" ).split("#");
+        if ( typeof(termin._Visitors) != "undefined" ) {
+          var names = termin._Visitors.replace( /\r\n/gm, "#" ).split("#");
+        } else {
+          var names = [];
+        }
 
         names.forEach( function(name) {
           let company = termin._Company.replace(/[<br>]*<[/]*div[^>]*>/gi, "");
