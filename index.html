@@ -184,18 +184,20 @@
             host: $('.modal-body .inputAppointment').val()
         }, function(id, status){
           // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
+          var n = encodeURIComponent($('.modal-body .inputName').val());
+          var c = encodeURIComponent($('.modal-body .inputCompany').val());
 
           var url = 'print.html';
-          url += '?name=' + $('.modal-body .inputName').val();
-          url += '&company=' + $('.modal-body .inputCompany').val();
+          url += '?name=' + n;
+          url += '&company=' + c;
           url += '&date=' + getDatum();
           url += '&code=' + $.trim(id);
           if ($('.modal-body .inputAppointment').val()) {
-            url += '&host=' + $('.modal-body .inputAppointment').val();
+            var h = encodeURIComponent($('.modal-body .inputAppointment').val());
+            url += '&host=' + h;
           }
 
-
-          window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
+          window.open( encodeURI(url), 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
         });
         $('#registerModalCenter').modal('hide');
       }
