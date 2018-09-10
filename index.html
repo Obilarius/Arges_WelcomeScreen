@@ -165,6 +165,7 @@
     $('#btnRegisterCheckIn').on('click', function (event) {
       var name = $('.modal-body .inputName').val();
       var company = $('.modal-body .inputCompany').val();
+      var host = $('.modal-body .inputAppointment').val();
 
       if ( name == "" || company == "" ) {
         if ( name == "" ) {
@@ -174,15 +175,7 @@
           $('.modal-body .inputCompany').addClass("is-invalid");
         }
       } else {
-        // ÜBERGABE AN DIE DATENBANK
-        $.post("mssql.php",
-        {
-            name: $('.modal-body .inputName').val(),
-            company: $('.modal-body .inputCompany').val(),
-            appid: $('.modal-body').data("appID"),
-            location: $('.modal-body').data("location"),
-            host: $('.modal-body .inputAppointment').val()
-        }, function(id, status){
+        if (host == "debug") {
           // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
           var n = encodeURIComponent($('.modal-body .inputName').val());
           var c = encodeURIComponent($('.modal-body .inputCompany').val());
@@ -191,16 +184,39 @@
           url += '?name=' + n;
           url += '&company=' + c;
           url += '&date=' + getDatum();
-          url += '&code=' + $.trim(id);
-          if ($('.modal-body .inputAppointment').val()) {
-            var h = encodeURIComponent($('.modal-body .inputAppointment').val());
-            url += '&host=' + h;
-          }
+          url += '&debug=true';
 
-          window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
-        });
-        $('#registerModalCenter').modal('hide');
-      }
+          window.open( url, 'winPrint', '');
+          $('#registerModalCenter').modal('hide');
+        } else {
+          // ÜBERGABE AN DIE DATENBANK
+          $.post("mssql.php",
+          {
+              name: $('.modal-body .inputName').val(),
+              company: $('.modal-body .inputCompany').val(),
+              appid: $('.modal-body').data("appID"),
+              location: $('.modal-body').data("location"),
+              host: $('.modal-body .inputAppointment').val()
+          }, function(id, status){
+            // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
+            var n = encodeURIComponent($('.modal-body .inputName').val());
+            var c = encodeURIComponent($('.modal-body .inputCompany').val());
+
+            var url = 'print.html';
+            url += '?name=' + n;
+            url += '&company=' + c;
+            url += '&date=' + getDatum();
+            url += '&code=' + $.trim(id);
+            if ($('.modal-body .inputAppointment').val()) {
+              var h = encodeURIComponent($('.modal-body .inputAppointment').val());
+              url += '&host=' + h;
+            }
+
+            window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
+          });
+          $('#registerModalCenter').modal('hide');
+        }
+      } //End If Debug
     })
 
     // CHECKOUT MODAL SHOW FUNCTION
