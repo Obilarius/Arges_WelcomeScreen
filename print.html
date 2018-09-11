@@ -25,7 +25,7 @@
 <script type="text/javascript">
 
   $( document ).ready(function() {
-
+    var debug = false;
     // console.log("UTF8 -- " + decodeURI(location.search));
 
     if (location.search != '') {
@@ -52,6 +52,8 @@
           $(".visitorId").html(hashWert);
         } else if(name == "host") {
           $("#" + name).html("<span>Host:</span><br>" + wert);
+        } else if(name == "debug") {
+          debug = true;
         } else {
           $("#" + name).html(wert);
         }
@@ -59,8 +61,10 @@
     }
 
     setTimeout(function(){
-       window.print();
-       window.close();
+      if (!debug) {
+        window.print();
+        window.close();
+      }
     }, 300);
   });
 </script>

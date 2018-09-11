@@ -3,6 +3,7 @@
 
 // CHECKIN
 if( isset($_POST['name'], $_POST['company']) ) {
+  echo "was?!";
   try {
     $pdo = new PDO("sqlsrv:Server=dionysos;Database=Visitors", NULL, NULL);
     $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
@@ -13,8 +14,6 @@ if( isset($_POST['name'], $_POST['company']) ) {
 
   $statement = $pdo->prepare("INSERT INTO tblVisitorsCheckIN (name, company, checkIn, appointmentID, location, Host) VALUES (:name, :company, :checkIn, :appid, :location, :host)");
 
-  $name = $_POST['name'];
-  $company = $_POST['company'];
   $appid = ( isset($_POST['appid']) and $_POST['appid'] != "" ) ? $_POST['appid'] : NULL ;
   $location = ( isset($_POST['location']) and $_POST['location'] != "" ) ? $_POST['location'] : NULL ;
   $host = ( isset($_POST['host']) and $_POST['host'] != "" ) ? $_POST['host'] : NULL ;
