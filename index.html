@@ -69,6 +69,7 @@
 
           </div>
           <div class="modal-footer">
+            <span style="font-size: 28px; color: red; padding-right: 20px; display: none">Visitor already logged in</span>
             <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
             <button type="button" class="btn btn-primary" id="btnRegisterCheckIn">Register</button>
           </div>
@@ -103,8 +104,6 @@
     </div>
 
 
-
-
     <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="script/bootstrap.js"></script>
     <script type="text/javascript" src="script/ObjTree.js"></script>
@@ -123,8 +122,9 @@
         $('.inputName').focus();
         var button = $(event.relatedTarget); // Button that triggered the modal
 
-        $('.modal-body .inputName').removeClass("is-invalid");
-        $('.modal-body .inputCompany').removeClass("is-invalid");
+        $('#registerModalCenter .modal-body .inputName').removeClass("is-invalid");
+        $('#registerModalCenter .modal-body .inputCompany').removeClass("is-invalid");
+        $('#registerModalCenter .modal-footer span').css("display", "none");
 
         if (button[0].className == "userRegisterLink") {
           let name = button.data('name') // Extract info from data-* attributes
@@ -198,22 +198,30 @@
                 location: $('.modal-body').data("location"),
                 host: $('.modal-body .inputAppointment').val()
             }, function(id, status){
-              // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
-              var n = encodeURIComponent($('.modal-body .inputName').val());
-              var c = encodeURIComponent($('.modal-body .inputCompany').val());
+              if (id == -1) {
+                $('#registerModalCenter .modal-footer span').css("display", "inline");
 
-              var url = 'print.html';
-              url += '?name=' + n;
-              url += '&company=' + c;
-              url += '&date=' + getDatum();
-              url += '&code=' + $.trim(id);
-              if ($('.modal-body .inputAppointment').val()) {
-                var h = encodeURIComponent($('.modal-body .inputAppointment').val());
-                url += '&host=' + h;
+                window.setTimeout(function(){
+                   $('#registerModalCenter').modal('hide');
+                }, 2000);
+              } else {
+                // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
+                var n = encodeURIComponent($('.modal-body .inputName').val());
+                var c = encodeURIComponent($('.modal-body .inputCompany').val());
+
+                var url = 'print.html';
+                url += '?name=' + n;
+                url += '&company=' + c;
+                url += '&date=' + getDatum();
+                url += '&code=' + $.trim(id);
+                if ($('.modal-body .inputAppointment').val()) {
+                  var h = encodeURIComponent($('.modal-body .inputAppointment').val());
+                  url += '&host=' + h;
+                }
+                window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
+                $('#registerModalCenter').modal('hide');
               }
-              window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
             });
-            $('#registerModalCenter').modal('hide');
           }
         } //End If Debug
       })

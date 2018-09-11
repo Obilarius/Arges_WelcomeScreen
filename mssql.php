@@ -3,7 +3,6 @@
 
 // CHECKIN
 if( isset($_POST['name'], $_POST['company']) ) {
-  echo "was?!";
   try {
     $pdo = new PDO("sqlsrv:Server=dionysos;Database=Visitors", NULL, NULL);
     $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
@@ -12,23 +11,39 @@ if( isset($_POST['name'], $_POST['company']) ) {
       exit;
   }
 
-  $statement = $pdo->prepare("INSERT INTO tblVisitorsCheckIN (name, company, checkIn, appointmentID, location, Host) VALUES (:name, :company, :checkIn, :appid, :location, :host)");
-
-  $appid = ( isset($_POST['appid']) and $_POST['appid'] != "" ) ? $_POST['appid'] : NULL ;
-  $location = ( isset($_POST['location']) and $_POST['location'] != "" ) ? $_POST['location'] : NULL ;
-  $host = ( isset($_POST['host']) and $_POST['host'] != "" ) ? $_POST['host'] : NULL ;
+  $name = $_POST['name'];
+  $company = $_POST['company'];
+  // Check Already CheckedIn
+  $statement = $pdo->prepare("SELECT * FROM tblVisitorsCheckIN WHERE name = :name AND company = :company AND checkIN >= CONVERT(datetime, convert(varchar(10), GETDATE() ,120), 120)");
 
   $statement->bindValue(":name", $name);
   $statement->bindValue(":company", $company);
-  $statement->bindValue(":appid", $appid);
-  $statement->bindValue(":location", $location);
-  $statement->bindValue(":host", $host);
-  $statement->bindValue(":checkIn", date('Y-m-d\TH:i:s'));
-
   $statement->execute();
-  $lastID = $pdo->lastInsertId();
+  $AlreadyCheckedIn = $statement->fetchColumn();
 
-  echo $lastID;
+  if ($AlreadyCheckedIn != 0) {
+    // writeLog("Besucher " . $name . " schon eingecheckt!");
+    echo -1;
+  } else {
+    // writeLog("Besucher " . $name . " wird eingecheckt!");
+    $statement = $pdo->prepare("INSERT INTO tblVisitorsCheckIN (name, company, checkIn, appointmentID, location, Host) VALUES (:name, :company, :checkIn, :appid, :location, :host)");
+
+    $appid = ( isset($_POST['appid']) and $_POST['appid'] != "" ) ? $_POST['appid'] : NULL ;
+    $location = ( isset($_POST['location']) and $_POST['location'] != "" ) ? $_POST['location'] : NULL ;
+    $host = ( isset($_POST['host']) and $_POST['host'] != "" ) ? $_POST['host'] : NULL ;
+
+    $statement->bindValue(":name", $name);
+    $statement->bindValue(":company", $company);
+    $statement->bindValue(":appid", $appid);
+    $statement->bindValue(":location", $location);
+    $statement->bindValue(":host", $host);
+    $statement->bindValue(":checkIn", date('Y-m-d\TH:i:s'));
+
+    $statement->execute();
+    $lastID = $pdo->lastInsertId();
+
+    echo $lastID;
+  }
 }
 
 
