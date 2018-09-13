@@ -5,7 +5,6 @@
     <title>Welcome Page</title>
   </head>
   <body>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/index.css">
@@ -298,7 +297,8 @@
           names.forEach( function(name) {
             let company = termin._Company.replace(/[<br>]*<[/]*div[^>]*>/gi, "");
             company = company.replace(/<[/]*br[^>]*>/gi, " - ");
-            let host = ( typeof termin._Host === "undefined" ? null : termin._Host.trim() )
+
+            let host = ( typeof termin._Host === "undefined" ? null : termin._Host.trim() );
 
             terminTemplate += '<li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter"';
             terminTemplate += 'data-name="'+ name +'"';
@@ -311,7 +311,9 @@
             terminTemplate += '>'+ name +'</span></li>';
           });
 
-          terminTemplate += '</ul></td><td class="col col3">'+ termin._Company +'</td><td class="col col4"><img src="'+ termin._WelcomeLogo +'" alt=""></td></tr>';
+          // Prüfung ob die Firmal ausgefüllt wurde
+          let _company = ( typeof termin._Company === "undefined" ? "" : termin._Company.trim() );
+          terminTemplate += '</ul></td><td class="col col3">'+ _company +'</td><td class="col col4"><img src="'+ termin._WelcomeLogo +'" alt=""></td></tr>';
 
           $("#dynTermin").append(terminTemplate);
         })
