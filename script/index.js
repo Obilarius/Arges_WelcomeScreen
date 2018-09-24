@@ -50,6 +50,7 @@ $( document ).ready(function() {
 
   // REGISTER MODAL BUTTON ## INSERT IN DATENBANK UND ERZEUGT DAS LABEL
   $('#btnRegisterCheckIn').on('click', function (event) {
+    if(!getUrlParameter('preview')) {
     var name = $('.modal-body .inputName').val();
     var company = $('.modal-body .inputCompany').val();
     var host = $('.modal-body .inputAppointment').val();
@@ -111,6 +112,7 @@ $( document ).ready(function() {
         });
       }
     } //End If Debug
+  } // End If Preview
   })
 
   // CHECKOUT MODAL SHOW FUNCTION
@@ -157,7 +159,7 @@ $( document ).ready(function() {
 function dynAppointment () {
   $.post("readFile.php",
   {
-    url: "//filer/Public/Datenbankentwicklung/ARGESVisitors/ARGESVisitorsList.xml"
+    url: "//filer/Public/Datenbankentwicklung/ARGESVisitors/ARGESVisitorsListNew.xml"
   }, function(data, status){
     xotree = new XML.ObjTree()
     var jsonObj = xotree.parseXML( data );
@@ -175,37 +177,62 @@ function dynAppointment () {
 
     $("#dynTermin").html("");
     $.each(jsonObj, function( key, termin ) {
-      var terminTemplate = '<tr class="dynTr"><td class="col col1">'+ termin._Start_Time +'</td><td class="col col2"><ul>';
+      // Prüfen ob Termin heute ist
+      var jetzt = new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
+      jetzt = new Date(jetzt);
+      var termin_from = new Date(termin._WelcomeDisplayTimeFrom);
+      var termin_to = new Date(termin._WelcomeDisplayTimeTo);
+      
 
-      // NAME IN ARRAY ZERLEGEN
-      if ( typeof(termin._Visitors) != "undefined" ) {
-        var names = termin._Visitors.replace( /\r\n/gm, "#" ).split("#");
-      } else {
-        var names = [];
+      if( getUrlParameter("show") == "all" ||  termin_from <= jetzt && jetzt <= termin_to) {
+        var terminTemplate = '<tr class="dynTr"><td class="col col1">'+ termin._Start_Time +'</td><td class="col col2"><ul>';
+
+        // NAME IN ARRAY ZERLEGEN
+        if ( typeof(termin._Visitors) != "undefined" ) {
+          var names = termin._Visitors.replace( /\r\n/gm, "#" ).split("#");
+        } else {
+          var names = [];
+        }
+
+        names.forEach( function(name) {
+          let company = termin._Company.replace(/[<br>]*<[/]*div[^>]*>/gi, "");
+          company = company.replace(/<[/]*br[^>]*>/gi, " - ");
+
+          let host = ( typeof termin._Host === "undefined" ? null : termin._Host.trim() );
+
+          terminTemplate += '<li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter"';
+          terminTemplate += 'data-name="'+ name +'"';
+          terminTemplate += 'data-company="'+ company +'"';
+          terminTemplate += 'data-appid="'+ termin._ID +'"';
+          terminTemplate += 'data-location="'+ termin._Location +'"';
+          terminTemplate += 'data-host="'+ host +'"';
+          terminTemplate += 'data-host="Host Name"';
+
+          terminTemplate += '>'+ name +'</span></li>';
+        });
+
+        // Prüfung ob die Firmal ausgefüllt wurde
+        let _company = ( typeof termin._Company === "undefined" ? "" : termin._Company.trim() );
+        terminTemplate += '</ul></td><td class="col col3">'+ _company +'</td><td class="col col4"><img src="'+ termin._WelcomeLogo +'" alt=""></td></tr>';
+
+        $("#dynTermin").append(terminTemplate);
       }
-
-      names.forEach( function(name) {
-        let company = termin._Company.replace(/[<br>]*<[/]*div[^>]*>/gi, "");
-        company = company.replace(/<[/]*br[^>]*>/gi, " - ");
-
-        let host = ( typeof termin._Host === "undefined" ? null : termin._Host.trim() );
-
-        terminTemplate += '<li><span class="userRegisterLink" data-toggle="modal" data-target="#registerModalCenter"';
-        terminTemplate += 'data-name="'+ name +'"';
-        terminTemplate += 'data-company="'+ company +'"';
-        terminTemplate += 'data-appid="'+ termin._ID +'"';
-        terminTemplate += 'data-location="'+ termin._Location +'"';
-        terminTemplate += 'data-host="'+ host +'"';
-        terminTemplate += 'data-host="Host Name"';
-
-        terminTemplate += '>'+ name +'</span></li>';
-      });
-
-      // Prüfung ob die Firmal ausgefüllt wurde
-      let _company = ( typeof termin._Company === "undefined" ? "" : termin._Company.trim() );
-      terminTemplate += '</ul></td><td class="col col3">'+ _company +'</td><td class="col col4"><img src="'+ termin._WelcomeLogo +'" alt=""></td></tr>';
-
-      $("#dynTermin").append(terminTemplate);
     })
   });
 } // Ende dynAppointment
+
+
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? false : sParameterName[1];
+        }
+    }
+};
