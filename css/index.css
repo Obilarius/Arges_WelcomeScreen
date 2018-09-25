@@ -35,7 +35,7 @@ body {
 }
 
 /* TABLE */
-table {
+table#content-table {
   table-layout: fixed;
   width: 3334px;
   position: absolute;

@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- <meta charset="utf-8"> -->
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <title>jQuery UI Datepicker - Default functionality</title>
+
+
+
+  <link rel="stylesheet" href="css/jquery-ui.min.css">
+  <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="script/jquery-ui.min.js"></script>
+  <!-- <link rel="stylesheet" href="css/index.css"> -->
+
+
+
+  <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+  <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+  <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+  <script>
+  $(function() {
+    $('#datepicker').datepicker({
+      prevText: 'zurück', prevStatus: '',
+      prevJumpText: '&#x3c;&#x3c;', prevJumpStatus: '',
+      nextText: 'Vor;', nextStatus: '',
+      nextJumpText: '&#x3e;&#x3e;', nextJumpStatus: '',
+      currentText: 'heute', currentStatus: '',
+      todayText: 'heute', todayStatus: '',
+      clearText: '-', clearStatus: '',
+      closeText: 'schließen', closeStatus: '',
+      monthNames: ['Januar','Februar','März','April','Mai','Juni',
+      'Juli','August','September','Oktober','November','Dezember'],
+      monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
+      'Jul','Aug','Sep','Okt','Nov','Dez'],
+      dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
+      dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
+      dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
+      showMonthAfterYear: false,
+      showOn: 'both',
+      dateFormat:'dd MM yy'
+    });
+  });
+  </script>
+</head>
+<body>
+
+<p>Date: <input type="text" id="datepicker"></p>
+
+
+</body>
+
+<style media="screen">
+body {
+  font-family: Arial;
+  overflow: hidden;
+  font-size: 42pt;
+  color: #004785;
+}
+
+.font42 { font-size: 42pt; }
+
+/* HEADER */
+.header {
+  position:absolute;
+  left:762px;
+  top:0;
+  font-size: 200pt;
+  background-color: #E3EAEE;
+  height: 330px;
+  vertical-align: middle;
+  text-align: center;
+  width: 3334px;
+  color: #fff;
+}
+
+body {
+  font-family: Arial;
+  overflow: hidden;
+  font-size: 42pt;
+  color: #004785;
+}
+
+.font42 { font-size: 42pt; }
+
+/* HEADER */
+.header {
+  position:absolute;
+  left:762px;
+  top:0;
+  font-size: 200pt;
+  background-color: #E3EAEE;
+  height: 330px;
+  vertical-align: middle;
+  text-align: center;
+  width: 3334px;
+  color: #fff;
+}
+
+.header span {
+  line-height: 330px;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position:absolute;
+  left:0;
+  top :0;
+  width: 726px;
+  height: 2160px;
+}
+
+/* TABLE */
+/* table {
+  table-layout: fixed;
+  width: 3334px;
+  position: absolute;
+  top: 330px;
+  left: 762px;
+  overflow: hidden;
+} */
+
+
+
+/* .col {
+  border-bottom: 2px solid #F0F0F0;
+}
+
+.col1 {
+  text-align: center;
+}
+.col2 {
+  padding-left: 50px;
+  padding-right: 10px;
+}
+.col3 {
+  padding-left: 30px;
+  font-weight: 700;
+  font-size: 56pt;
+}
+.col4 {
+  padding: 20px 0 10px 0px;
+  text-align: center;
+}
+
+.dynTr {
+  height: 150px;
+}
+.dynTr img {
+  max-height: 200px;
+  max-width: 100%;
+  padding-right: 100px;
+} */
+
+/* td {
+  vertical-align: top;
+  padding-top: 40px;
+  padding-bottom: 40px;
+} */
+
+
+/* .col {
+  border-bottom: 2px solid #F0F0F0;
+}
+
+.col1 {
+  text-align: center;
+}
+.col2 {
+  padding-left: 50px;
+  padding-right: 10px;
+}
+.col3 {
+  padding-left: 30px;
+  font-weight: 700;
+  font-size: 56pt;
+}
+.col4 {
+  padding: 20px 0 10px 0px;
+  text-align: center;
+}
+
+.dynTr {
+  height: 150px;
+}
+.dynTr img {
+  max-height: 200px;
+  max-width: 100%;
+  padding-right: 100px;
+}
+
+td {
+  vertical-align: top;
+  padding-top: 40px;
+  padding-bottom: 40px;
+} */
+
+ul {
+  line-height: 110%;
+}
+
+.userRegisterLink {
+  cursor: pointer;
+}
+
+/* REGISTER DESCRIPTION */
+.registerDescription {
+  position: absolute;
+  bottom: 310px;
+  left: 20px;
+  font-size: 30.7px;
+  text-transform: uppercase;
+}
+
+/* REGISTER BUTTON */
+.btnRegister {
+  position: absolute;
+  bottom: 170px;
+  left: 20px;
+  padding: 20px 0px;
+  width: 686px;
+}
+
+.btnRegister i {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.03) 1%, rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0.85) 70%, rgba(255, 255, 255, 0.85) 71%, rgba(255, 255, 255, 0) 100%);
+  width: 15%;
+  height: 100%;
+  transform: skew(-10deg, 0deg);
+  animation: btnShiny 3s infinite 1s;
+}
+
+@keyframes btnShiny {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.0;
+  }
+  48% {
+    opacity: 0.2;
+  }
+  80% {
+    opacity: 0.0;
+  }
+  100% {
+    left: 82%;
+  }
+}
+
+/* CHECKOUT BUTTON */
+.btnCheckOut {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 20px 0px;
+  width: 686px;
+}
+
+/* MODAL */
+.modal-open .modal {
+    overflow: hidden;
+}
+.modal-dialog {
+  width: 686px;
+  margin: 0 auto;
+  position: absolute;
+  left: 20px;
+  bottom: 380px;
+
+}
+.modal-title {
+  font-size: 30pt;
+  width: 90%;
+}
+.modal-dialog .close {
+  font-size: 30pt;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.modal-footer button {
+  /* font-size: 25pt; */
+}
+.checkout-msg {
+  font-size: 24pt;
+}
+.is-invalid {
+  border: 1px solid red;
+}
+.is-invalid:focus {
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(255,0,0,.6);
+  border-color: red;
+}
+.is-invalid::placeholder {
+  color: red;
+}
+
+.datepicker-wrapper {
+  position: absolute;
+}
+
+</style>
+
+
+
+
+
+</html>

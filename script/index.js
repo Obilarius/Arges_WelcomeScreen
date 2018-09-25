@@ -1,6 +1,24 @@
-let datum = getDatumLang();
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? "test" : sParameterName[1];
+        }
+    }
+};
 
 $( document ).ready(function() {
+  let datum = getDatumLang(new Date());
+  if (getUrlParameter("date")) {
+    datum = getDatumLang(new Date(getUrlParameter("date").replace( /(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3 07:01")));
+  }
+
   $("#date").html(datum);
   dynAppointment(); // Initiale befüllung mit Terminen
 
@@ -175,16 +193,24 @@ function dynAppointment () {
       jsonObj.push(temp);
     }
 
+    // Datum aus URL ?date=19.06.2018 wird in Datum umgewandelt fals vorhanden
+    var previewDate;
+    if (getUrlParameter("date")) { previewDate = new Date(getUrlParameter("date").replace( /(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3 07:01")) }
+
+    var jetzt = new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
+    jetzt = new Date(jetzt);
+
     $("#dynTermin").html("");
     $.each(jsonObj, function( key, termin ) {
       // Prüfen ob Termin heute ist
-      var jetzt = new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
-      jetzt = new Date(jetzt);
+
       var termin_from = new Date(termin._WelcomeDisplayTimeFrom);
       var termin_to = new Date(termin._WelcomeDisplayTimeTo);
-      
 
-      if( getUrlParameter("show") == "all" ||  termin_from <= jetzt && jetzt <= termin_to) {
+      // Zeige alle Termine / Zeige alle Termine aber gefiltert die am entsprechenden Datum / Zeige heutige Termine //
+      if( getUrlParameter("show") == "all"  && !getUrlParameter("date") ||
+          getUrlParameter("show") == "all"  && termin_from <= previewDate && previewDate <= termin_to ||
+          termin_from <= jetzt && jetzt <= termin_to && !getUrlParameter("date")) {
         var terminTemplate = '<tr class="dynTr"><td class="col col1">'+ termin._Start_Time +'</td><td class="col col2"><ul>';
 
         // NAME IN ARRAY ZERLEGEN
@@ -220,19 +246,3 @@ function dynAppointment () {
     })
   });
 } // Ende dynAppointment
-
-
-var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? false : sParameterName[1];
-        }
-    }
-};

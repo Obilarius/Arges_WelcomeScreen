@@ -6,8 +6,20 @@
   </head>
   <body>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/index.css">
+
+
+    <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="script/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="script/bootstrap.js"></script>
+    <script type="text/javascript" src="script/func.js"></script>
+    <script type="text/javascript" src="script/ObjTree.js"></script>
+    <script type="text/javascript" src="script/hashid/hashids.min.js"></script>
+    <script type="text/javascript" src="script/index.js"></script>
+
+
 
     <div class="sidebar">
       <img src="img/arges_welcome_monitor_bildleiste2.jpg" alt="">
@@ -16,7 +28,50 @@
       <span>Welcome to </span><span style="font-weight: 700">ARGES</span>
     </div>
 
-    <table>
+
+    <!-- DATEPICKER -->
+    <div class="datepicker-wrapper" style="display: none; position: absolute;">
+      <p>Datum: <br><input type="text" id="datepicker"></p>
+    </div>
+
+    <script>
+    if (getUrlParameter("preview") && getUrlParameter("show") == "all") {
+      // console.log(window.location);
+      $(function() {
+        $('#datepicker').datepicker({
+          prevText: 'zurück', prevStatus: '',
+          prevJumpText: '&#x3c;&#x3c;', prevJumpStatus: '',
+          nextText: 'Vor;', nextStatus: '',
+          nextJumpText: '&#x3e;&#x3e;', nextJumpStatus: '',
+          currentText: 'heute', currentStatus: '',
+          todayText: 'heute', todayStatus: '',
+          clearText: '-', clearStatus: '',
+          closeText: 'schließen', closeStatus: '',
+          monthNames: ['Januar','Februar','März','April','Mai','Juni',
+          'Juli','August','September','Oktober','November','Dezember'],
+          monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
+          'Jul','Aug','Sep','Okt','Nov','Dez'],
+          dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
+          dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
+          dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
+          showMonthAfterYear: false,
+          showOn: 'both',
+          dateFormat:'dd.mm.yy',
+          onClose: function(dateTime){
+             console.log(dateTime);
+             window.location = window.location.origin + window.location.pathname + "?show=all&preview=true&date=" + dateTime;
+          }
+        });
+      });
+
+      $(".datepicker-wrapper").css("display", "block");
+    }
+
+    </script>
+
+
+
+    <table id="content-table">
       <thead>
         <tr>
           <td class="widthCol1">
@@ -101,14 +156,6 @@
         </div>
       </div>
     </div>
-
-
-    <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="script/bootstrap.js"></script>
-    <script type="text/javascript" src="script/ObjTree.js"></script>
-    <script type="text/javascript" src="script/hashid/hashids.min.js"></script>
-    <script type="text/javascript" src="script/func.js"></script>
-    <script type="text/javascript" src="script/index.js"></script>
 
   </body>
 </html>
