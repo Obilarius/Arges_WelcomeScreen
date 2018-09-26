@@ -211,7 +211,9 @@ function dynAppointment () {
       if( getUrlParameter("show") == "all"  && !getUrlParameter("date") ||
           getUrlParameter("show") == "all"  && termin_from <= previewDate && previewDate <= termin_to ||
           termin_from <= jetzt && jetzt <= termin_to && !getUrlParameter("date")) {
-        var terminTemplate = '<tr class="dynTr"><td class="col col1">'+ termin._Start_Time +'</td><td class="col col2"><ul>';
+        var terminTemplate = '<tr class="dynTr"><td class="col col1">';
+        terminTemplate += (termin._Start_Time == "00:00" ? "08:00" : termin._Start_Time);
+        terminTemplate += '</td><td class="col col2"><ul>';
 
         // NAME IN ARRAY ZERLEGEN
         if ( typeof(termin._Visitors) != "undefined" ) {
