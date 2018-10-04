@@ -8,20 +8,26 @@
   </head>
   <body>
     Datum:<br>
-    <input type="datetime" name="date" value="" style="width: 500px;">
-    <br>
-    Company:<br>
-    <input type="text" name="company" value="" style="width: 500px;">
+    <input type="datetime" name="date" value="05.10.2018" style="width: 600px;">
     <br>
     Host:<br>
-    <input type="text" name="host" value="" style="width: 500px;">
+    <input type="text" name="host" value="Wirtschaftsfrühstück" style="width: 600px;">
     <br>
     Location:<br>
-    <input type="text" name="location" value="" style="width: 500px;">
+    <input type="text" name="location" value="MeetingRoom DG" style="width: 600px;">
     <br>
-    Names:<br>
-    <textarea name="names" style="width: 500px; height: 500px;"></textarea>
-    <br>
+
+    <table>
+      <tr>
+        <td>Companys:</td>
+        <td>Names:</td>
+      </tr>
+      <tr>
+        <td><textarea name="companys" style="width: 300px; height: 500px;"></textarea></td>
+        <td><textarea name="names" style="width: 300px; height: 500px;"></textarea></td>
+      </tr>
+    </table>
+
     <button onclick="losGehts()">CheckIn</button>
 
   </body>
@@ -32,28 +38,28 @@
 
 function losGehts() {
   var names = $("textarea[name='names']").val().split('\n');
+  var companys = $("textarea[name='companys']").val().split('\n');
 
   $.each( names, function( key, name ) {
-    CheckIn($.trim(name));
+    CheckIn($.trim(name), companys[key]);
   });
 }
 
 
 
-function CheckIn(_name) {
+function CheckIn(_name, _company) {
   let date = $("input[name='date']").val();
-  var company = $("input[name='company']").val();
   var host = $("input[name='host']").val();
   var location = $("input[name='location']").val();
 
-  if ( _name == "" || company == "" || date == "") {
+  if ( _name == "" || _company == "" || date == "") {
     alert("Fehler: Datum, Firma oder keine Namen eingetragen")
   } else {
     // ÜBERGABE AN DIE DATENBANK
     $.post("mssql.php",
     {
         name:  _name,
-        company: $("input[name='company']").val(),
+        company: _company,
         location: $("input[name='location']").val(),
         host: $("input[name='host']").val()
     }, function(id, status){
@@ -62,7 +68,7 @@ function CheckIn(_name) {
       } else {
         // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
         var n = encodeURIComponent(_name);
-        var c = encodeURIComponent($("input[name='company']").val());
+        var c = encodeURIComponent(_company);
         var d = $.trim(date);
 
         var url = 'print.html';
