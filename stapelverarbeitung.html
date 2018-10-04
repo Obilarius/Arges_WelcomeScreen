@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="DE" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    Datum:<br>
+    <input type="datetime" name="date" value="" style="width: 500px;">
+    <br>
+    Company:<br>
+    <input type="text" name="company" value="" style="width: 500px;">
+    <br>
+    Host:<br>
+    <input type="text" name="host" value="" style="width: 500px;">
+    <br>
+    Location:<br>
+    <input type="text" name="location" value="" style="width: 500px;">
+    <br>
+    Names:<br>
+    <textarea name="names" style="width: 500px; height: 500px;"></textarea>
+    <br>
+    <button onclick="losGehts()">CheckIn</button>
+
+  </body>
+</html>
+
+
+<script type="text/javascript">
+
+function losGehts() {
+  var names = $("textarea[name='names']").val().split('\n');
+
+  $.each( names, function( key, name ) {
+    CheckIn($.trim(name));
+  });
+}
+
+
+
+function CheckIn(_name) {
+  let date = $("input[name='date']").val();
+  var company = $("input[name='company']").val();
+  var host = $("input[name='host']").val();
+  var location = $("input[name='location']").val();
+
+  if ( _name == "" || company == "" || date == "") {
+    alert("Fehler: Datum, Firma oder keine Namen eingetragen")
+  } else {
+    // ÜBERGABE AN DIE DATENBANK
+    $.post("mssql.php",
+    {
+        name:  _name,
+        company: $("input[name='company']").val(),
+        location: $("input[name='location']").val(),
+        host: $("input[name='host']").val()
+    }, function(id, status){
+      if (id == -1) {
+        alert("Eintrag in die Datenbank fehlgeschlagen")
+      } else {
+        // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
+        var n = encodeURIComponent(_name);
+        var c = encodeURIComponent($("input[name='company']").val());
+        var d = $.trim(date);
+
+        var url = 'print.html';
+        url += '?name=' + n;
+        url += '&company=' + c;
+        url += '&date=' + d;
+        url += '&code=' + $.trim(id);
+        if ($("input[name='host']").val()) {
+          var h = encodeURIComponent($("input[name='host']").val());
+          url += '&host=' + h;
+        }
+        window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
+        // console.log(url);
+      }
+    });
+  }
+}
+
+</script>
