@@ -1,17 +1,7 @@
-var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? "test" : sParameterName[1];
-        }
-    }
-};
+// Skalierung für FullHD Monitore bei Preview
+if (getUrlParameter("preview")) {
+  $("body").append('<link rel="stylesheet" href="css/indexPreview.css">')
+}
 
 $( document ).ready(function() {
   let datum = getDatumLang(new Date());
@@ -173,7 +163,6 @@ $( document ).ready(function() {
 }); // Ende Document Ready
 
 
-
 function dynAppointment () {
   $.post("readFile.php",
   {
@@ -200,9 +189,7 @@ function dynAppointment () {
     var jetzt = new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
     jetzt = new Date(jetzt);
 
-    console.log(jsonObj);
     jsonObj.sort(compareByStarttime);
-    console.log(jsonObj);
 
     $("#dynTermin").html("");
     $.each(jsonObj, function( key, termin ) {
@@ -253,13 +240,3 @@ function dynAppointment () {
     })
   });
 } // Ende dynAppointment
-
-
-// Sortierfunktion um Terminzeiten zu sortieren
-function compareByStarttime(a,b) {
-  if (a._Start_Time < b._Start_Time)
-    return -1;
-  if (a._Start_Time > b._Start_Time)
-    return 1;
-  return 0;
-}

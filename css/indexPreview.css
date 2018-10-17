@@ -1,0 +1,110 @@
+body {
+  font-size: 21pt;
+}
+
+.font42 { font-size: 21pt; }
+
+/* HEADER */
+.header {
+  left:381px;
+  font-size: 100pt;
+  height: 165px;
+  width: 1450px;
+}
+
+.header span {
+  line-height: 165px;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 363px;
+  height: 1080px;
+}
+.sidebar img {
+  width: inherit;
+}
+
+/* TABLE */
+table#content-table {
+  width: 1450px;
+  top: 165px;
+  left: 381px;
+}
+
+/* TABLE BODY */
+.widthCol1 { width: 90px; }
+.widthCol2 { width: 375px; }
+.widthCol3 { width: 650px; }
+
+thead tr td img {
+  height: 20px;
+}
+
+.col2 {
+  padding-left: 25px;
+  padding-right: 5px;
+}
+.col3 {
+  padding-left: 15px;
+  font-size: 28pt;
+}
+.col4 {
+  padding: 10px 0 5px 0px;
+}
+
+.dynTr {
+  height: 75px;
+}
+.dynTr img {
+  max-height: 80px;
+  padding-right: 50px;
+}
+
+td {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+
+/* REGISTER DESCRIPTION */
+.registerDescription {
+  bottom: 155px;
+  left: 10px;
+  font-size: 15.35px;
+}
+
+/* REGISTER BUTTON */
+.btnRegister {
+  bottom: 85px;
+  left: 10px;
+  padding: 10px 0px;
+  width: 343px;
+}
+
+/* CHECKOUT BUTTON */
+.btnCheckOut {
+  bottom: 10px;
+  left: 10px;
+  padding: 10px 0px;
+  width: 343px;
+}
+
+.modal-dialog {
+  width: 343px;
+  left: 10px;
+  bottom: 190px;
+
+}
+.modal-title {
+  font-size: 15pt;
+}
+.modal-dialog .close {
+  font-size: 15pt;
+  top: 10px;
+  right: 10px;
+}
+
+.checkout-msg {
+  font-size: 12pt;
+}
