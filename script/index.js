@@ -200,6 +200,10 @@ function dynAppointment () {
     var jetzt = new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
     jetzt = new Date(jetzt);
 
+    console.log(jsonObj);
+    jsonObj.sort(compareByStarttime);
+    console.log(jsonObj);
+
     $("#dynTermin").html("");
     $.each(jsonObj, function( key, termin ) {
       // Prüfen ob Termin heute ist
@@ -244,7 +248,18 @@ function dynAppointment () {
         terminTemplate += '</ul></td><td class="col col3">'+ _company +'</td><td class="col col4"><img src="'+ termin._WelcomeLogo +'" alt=""></td></tr>';
 
         $("#dynTermin").append(terminTemplate);
+
       }
     })
   });
 } // Ende dynAppointment
+
+
+// Sortierfunktion um Terminzeiten zu sortieren
+function compareByStarttime(a,b) {
+  if (a._Start_Time < b._Start_Time)
+    return -1;
+  if (a._Start_Time > b._Start_Time)
+    return 1;
+  return 0;
+}
