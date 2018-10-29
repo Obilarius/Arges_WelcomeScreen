@@ -1,9 +1,11 @@
 // Skalierung für FullHD Monitore bei Preview
 if (getUrlParameter("preview")) {
-  $("body").append('<link rel="stylesheet" href="css/indexPreview.css">')
+  // $("body").append('<link rel="stylesheet" href="css/indexPreview.css">')
 }
 
 $( document ).ready(function() {
+  jQuery(".registerDescription").fitText(2.2);
+
   let datum = getDatumLang(new Date());
   if (getUrlParameter("date")) {
     datum = getDatumLang(new Date(getUrlParameter("date").replace( /(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3 07:01")));
@@ -137,7 +139,7 @@ $( document ).ready(function() {
   // CHECKOUT MODAL BUTTON ## UPDATE IN DATENBANK
   $('#btnRegisterCheckOut').on('click', function (event) {
     var hashids = new Hashids("this is my salt", 6, "1234567890ABCDEF");
-    var id = hashids.decode( $('.modal-body .inputCheckOutId').val().trim() );
+    var id = hashids.decode( $('.modal-body .inputCheckOutId').val().trim().toUpperCase() );
     // ÜBERGABE AN DIE DATENBANK
     $.post("mssql.php", { visitorid: id[0] }, function(data){
       $('.checkout-body .inputCheckOutId').val("").hide();

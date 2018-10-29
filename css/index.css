@@ -1,100 +1,53 @@
 body {
   font-family: Arial;
   overflow: hidden;
-  font-size: 42pt;
+  /* font-size: 42pt; */
   color: #004785;
 }
 
-.font42 { font-size: 42pt; }
+.grid_container {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 20vw 1fr;
+    grid-template-rows: repeat(5, 15.2vh) 1fr;
+    grid-gap: 1vw;
+    grid-template-areas: "side1 header"
+                         "side2 content"
+                         "side3 content"
+                         "side4 content"
+                         "side5 content"
+                         "register content";
+}
 
-/* HEADER */
+.grid_container div {
+    background-size: cover;
+    background-position: center;
+}
+
 .header {
-  position:absolute;
-  left:762px;
-  top:0;
-  font-size: 200pt;
-  background-color: #E3EAEE;
-  height: 330px;
-  vertical-align: middle;
+    grid-area: header;
+    background: #e8f0f4;
+    font-family: arial;
+    color: white;
+    font-size: 11vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 5vw;
+}
+.side_1 { background-image: url("../img/welcome_bildleiste_1.jpg"); grid-area: side1; }
+.side_2 { background-image: url("../img/welcome_bildleiste_2.jpg"); grid-area: side2; }
+.side_3 { background-image: url("../img/welcome_bildleiste_3.jpg"); grid-area: side3; }
+.side_4 { background-image: url("../img/welcome_bildleiste_4.jpg"); grid-area: side4; }
+.side_5 { background-image: url("../img/welcome_bildleiste_5.jpg"); grid-area: side5; }
+
+.register_container {
+  grid-area: register;
+  width: 90%;
+  justify-self: center;
   text-align: center;
-  width: 3334px;
-  color: #fff;
-}
-
-.header span {
-  line-height: 330px;
-}
-
-/* SIDEBAR */
-.sidebar {
-  position:absolute;
-  left:0;
-  top :0;
-  width: 726px;
-  height: 2160px;
-}
-
-/* TABLE */
-table#content-table {
-  table-layout: fixed;
-  width: 3334px;
-  position: absolute;
-  top: 330px;
-  left: 762px;
-  overflow: hidden;
-}
-
-/* TABLE HEAD */
-thead tr td { vertical-align: middle; }
-thead tr td:nth-child(1) { text-align: center;}
-thead tr td:nth-child(2) { /* text-align: center; */}
-thead tr td:nth-child(3) { text-align: left;}
-
-/* TABLE BODY */
-.widthCol1 { width: 180px; }
-.widthCol2 { width: 750px; }
-/* .widthCol3plus4 { width: 2313px; } */
-.widthCol3 { width: 1300px; }
-/* .widthCol4 { width: 1037px; } */
-
-.col {
-  border-bottom: 2px solid #F0F0F0;
-}
-
-.col1 {
-  text-align: center;
-}
-.col2 {
-  padding-left: 50px;
-  padding-right: 10px;
-}
-.col3 {
-  padding-left: 30px;
-  font-weight: 700;
-  font-size: 56pt;
-}
-.col4 {
-  padding: 20px 0 10px 0px;
-  text-align: center;
-}
-
-.dynTr {
-  height: 150px;
-}
-.dynTr img {
-  max-height: 200px;
-  max-width: 100%;
-  padding-right: 100px;
-}
-
-td {
-  vertical-align: top;
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-
-ul {
-  line-height: 110%;
+  align-self: end;
+  margin-bottom: 2vh;
 }
 
 .userRegisterLink {
@@ -103,20 +56,13 @@ ul {
 
 /* REGISTER DESCRIPTION */
 .registerDescription {
-  position: absolute;
-  bottom: 310px;
-  left: 20px;
-  font-size: 30.7px;
   text-transform: uppercase;
 }
 
-/* REGISTER BUTTON */
-.btnRegister {
-  position: absolute;
-  bottom: 170px;
-  left: 20px;
-  padding: 20px 0px;
-  width: 686px;
+.btnRegister, .btnCheckOut {
+  font-size: 2vh;
+  width: 100%;
+  margin: 0.4vh 0;
 }
 
 .btnRegister i {
@@ -148,15 +94,6 @@ ul {
   100% {
     left: 82%;
   }
-}
-
-/* CHECKOUT BUTTON */
-.btnCheckOut {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  padding: 20px 0px;
-  width: 686px;
 }
 
 /* MODAL */
