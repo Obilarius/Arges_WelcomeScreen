@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/screensaver.css">
+
+
+    <div class="pic-wrapper">
+      <figure class="pic-1"></figure>
+      <figure class="pic-2"></figure>
+      <figure class="pic-3"></figure>
+      <figure class="pic-4"></figure>
+      <figure class="pic-5"></figure>
+    </div>
+  </body>
+</html>
+
+
+<script type="text/javascript">
+var mousetimeout;
+var screensaver_active = false;
+var idletime = 2; //sekunden
+
+function show_screensaver(){
+    $('.pic-wrapper').fadeIn();
+    screensaver_active = true;
+    screensaver_animation();
+}
+
+function stop_screensaver(){
+    $('.pic-wrapper').fadeOut();
+    screensaver_active = false;
+}
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.round(Math.random() * 15)];
+    }
+    console.log(color);
+    return color;
+}
+
+function getRandomNumber(min, max) {
+  // and the formula is:
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+$(document).mousemove(function(){
+    clearTimeout(mousetimeout);
+
+    if (screensaver_active) {
+        stop_screensaver();
+    }
+
+    mousetimeout = setTimeout(function(){
+        show_screensaver();
+    }, 1000 * idletime); // 5 secs
+});
+
+function screensaver_animation(){
+    if (screensaver_active) {
+        //$('#screensaver').animate({
+        //  backgroundColor: getRandomColor()
+        //}, 400, screensaver_animation);
+
+    }
+}
+
+
+</script>
