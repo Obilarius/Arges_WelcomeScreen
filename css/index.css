@@ -3,6 +3,7 @@ body {
   overflow: hidden;
   /* font-size: 42pt; */
   color: #004785;
+  font-size: 2.5vh;
 }
 
 .grid_container {
@@ -49,6 +50,62 @@ body {
   align-self: end;
   margin-bottom: 2vh;
 }
+
+/* DATAPICKER */
+.datepicker-wrapper { width: 100%; display: none; }
+.datepicker-wrapper input { width: 80%; }
+.datepicker-wrapper button { width: 20%; }
+
+/* TERMINTABELLE */
+#content-table {
+  width: 100%;
+}
+
+#content-table thead tr {
+    height: 3vh;
+    line-height: 3vh;
+}
+
+#content-table tbody tr {
+    height: 6vh;
+    line-height: 6vh;
+    border-bottom: 2px solid #E3EAEE;
+    max-height: 10vh;
+}
+
+#content-table td {
+  /* border: 1px red dotted; */
+  vertical-align:middle;
+  line-height: 100%;
+}
+
+
+#content-table tr td:nth-child(1) { width: 7%; text-align: center; }
+#content-table tr td:nth-child(2) { width: 25%; padding-left: 1vw;}
+#content-table tr td:nth-child(3) { width: 45%; font-weight: bold; font-size: 1.2em; padding-left: 1vw;}
+#content-table tr td:nth-child(4) { width: auto; }
+
+#content-table .parallelogram_left, #content-table .parallelogram_right  {
+  height: 1.9vh;
+  background: #FFD500;
+  transform: skewX(10deg);
+}
+#content-table .parallelogram_left {
+  width: 80%;
+  margin: auto auto;
+}
+#content-table .parallelogram_right {
+  width: 110%;
+  margin-left: -0.5vw;
+}
+
+#content-table .dynTr img {
+  max-height: 8vh;
+  padding-top: 1vh;
+  padding-left: 2vw;
+}
+
+
 
 .userRegisterLink {
   cursor: pointer;

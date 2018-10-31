@@ -152,7 +152,7 @@ $( document ).ready(function() {
     });
 
     window.setTimeout(function(){
-       $('#checkOutModalCenter').modal('hide');
+       // $('#checkOutModalCenter').modal('hide');
     }, 1500);
   })
 
