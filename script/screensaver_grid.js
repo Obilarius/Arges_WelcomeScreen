@@ -3,7 +3,7 @@ var AnzahlBilderQuer = 16;
 var AnzahlBilderHoch = 4;
 var ZeitUeberblendung = 1200; //in Millisekunden (600)
 var Intervall = 4000; //in Millisekunden (4000)
-var idletime = 60; //sekunden
+var idletime = 2; //sekunden
 var imgPath = "img/screensaver_grid/";
 
 

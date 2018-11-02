@@ -18,6 +18,18 @@ body {
   display: none;
 }
 
+.screensaver_wrapper .moving-info-text {
+  position: absolute;
+  top: 20vh;
+  left: 2vw;
+  z-index: 1000;
+  font-weight: bold;
+  /* text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white; */
+  /* text-shadow: 0px 0px 4px rgba(255, 255, 255, 1); */
+  text-shadow: 1px 1px 0 #e8f0f4, 1px -1px 0 #e8f0f4, -1px 1px 0 #e8f0f4, -1px -1px 0 #e8f0f4, 1px 0px 0 #e8f0f4, 0px 1px 0 #e8f0f4, -1px 0px 0 #e8f0f4, 0px -1px 0 #e8f0f4;
+  font-size: 0.7em;
+}
+
 .screensaver-grid-container {
   height: 100vh;
 	display: grid;
@@ -28,7 +40,7 @@ body {
                        "eins zwei hochEins drei"
                        "vier hochZwei hochEins fuenf"
                        "sechs hochZwei sieben acht";
-  z-index: 9999;
+  z-index: 999;
   cursor: none;
 }
 
@@ -47,6 +59,18 @@ body {
 	justify-content: flex-end;
 	align-items: center;
 	padding-right: 5vw;
+  animation-duration: 1800s;
+  animation-name: leftright;
+  animation-iteration-count: infinite;
+}
+
+@keyframes leftright {
+  0%, 100% {
+    	padding-right: 5vw;
+  }
+  50% {
+    	padding-right: 30vw;
+  }
 }
 
 .screensaver-grid-container .grid-item1 { grid-area: eins; }
