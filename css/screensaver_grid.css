@@ -1,0 +1,68 @@
+/* html {
+	height: 100%;
+}
+
+body {
+	background-color: white;
+	min-height: 100%;
+	overflow: hidden;
+}
+
+*{
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+} */
+
+.screensaver_wrapper {
+  display: none;
+}
+
+.screensaver-grid-container {
+  height: 100vh;
+	display: grid;
+	grid-gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: 15.2vh repeat(3, 1fr);
+  grid-template-areas: "header header header header"
+                       "eins zwei hochEins drei"
+                       "vier hochZwei hochEins fuenf"
+                       "sechs hochZwei sieben acht";
+  z-index: 9999;
+  cursor: none;
+}
+
+.screensaver-grid-container div {
+  background-size: cover;
+  background-position: center;
+}
+
+.screensaver-grid-container .header {
+  	grid-area: header;
+  	background: #e8f0f4;
+	font-family: arial;
+	color: white;
+	font-size: 11vh;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	padding-right: 5vw;
+}
+
+.screensaver-grid-container .grid-item1 { grid-area: eins; }
+.screensaver-grid-container .grid-item2 { grid-area: zwei; }
+.screensaver-grid-container .grid-item3 { grid-area: drei; }
+.screensaver-grid-container .grid-item4 { grid-area: vier; }
+.screensaver-grid-container .grid-item5 { grid-area: fuenf; }
+.screensaver-grid-container .grid-item6 { grid-area: sechs; }
+.screensaver-grid-container .grid-item7 { grid-area: sieben; }
+.screensaver-grid-container .grid-item8 { grid-area: acht; }
+.screensaver-grid-container .grid-item1h { grid-area: hochEins; }
+.screensaver-grid-container .grid-item2h { grid-area: hochZwei; }
+
+
+/* .screensaver-grid-container > div > div{
+	background-size: cover;
+	height: 100%;
+	width: 100%;
+} */

@@ -81,7 +81,7 @@ body {
 
 
 #content-table tr td:nth-child(1) { width: 7%; text-align: center; }
-#content-table tr td:nth-child(2) { width: 25%; padding-left: 1vw;}
+#content-table tr td:nth-child(2) { width: 25%; padding: 1vh 1vw;}
 #content-table tr td:nth-child(3) { width: 45%; font-weight: bold; font-size: 1.2em; padding-left: 1vw;}
 #content-table tr td:nth-child(4) { width: auto; }
 
@@ -103,6 +103,7 @@ body {
   max-height: 8vh;
   padding-top: 1vh;
   padding-left: 2vw;
+  padding-right: 2vw;
 }
 
 
