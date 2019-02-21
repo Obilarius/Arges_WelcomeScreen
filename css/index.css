@@ -193,17 +193,22 @@ body {
   color: red;
 }
 
-
-#curret_in_house {
+#current_in_house_wrapper {
   position: absolute;
   bottom: 0px;
-  right: 0px;
+  right: 25%;
+  width: 50vw;
+  font-size: 0.6em;
+}
+#curret_in_house {
+  /* background-color: rgba(255,255,255,0.8) */
+  background-color: #E8F0F4;
   padding: 20px;
-  background-color: rgba(255,255,255,0.8)
 }
 #curret_in_house table.tbl_curret_in_house {
   /* text-align: left; */
   border-collapse: collapse;
+  width: 100%;
 }
 #curret_in_house table.tbl_curret_in_house td, #curret_in_house table.tbl_curret_in_house th {
   /* border: 1px solid #A4A4A4; */
@@ -213,4 +218,25 @@ body {
 #curret_in_house table.tbl_curret_in_house thead th {
   /* font-size: 15px; */
   font-weight: bold;
+}
+
+#current_in_house_wrapper .trapez {
+  background-color: #E8F0F4;
+  width: 25%;
+  margin: auto;
+  text-align: center;
+  margin-bottom: -0.5vh;
+  /* padding: 1%; */
+  height: 4vh;
+  transform: perspective(5em) rotateX(45deg);
+}
+#current_in_house_wrapper .control_show {
+  position: relative;
+  text-align: center;
+  bottom: -3vh;
+  z-index: 10;
+}
+
+.dnone {
+  display: none;
 }

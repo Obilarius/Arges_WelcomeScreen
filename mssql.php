@@ -79,7 +79,7 @@ if( isset($_POST['inhouse']) ) {
   }
 
   // Check Already CheckedIn
-  $statement = $pdo->prepare("SELECT * FROM tblVisitorsCheckIN WHERE checkOUT IS NULL AND checkIN >= CONVERT(datetime, convert(varchar(10), GETDATE() ,120), 120)");
+  $statement = $pdo->prepare("SELECT * FROM tblVisitorsCheckIN WHERE checkOUT IS NULL AND checkIN >= CONVERT(datetime, convert(varchar(10), GETDATE() ,120), 120) ORDER BY Host, company, name;");
   $statement->execute();
   $result=$statement->fetchAll(PDO::FETCH_ASSOC);
 

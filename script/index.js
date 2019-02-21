@@ -59,7 +59,6 @@ $( document ).ready(function() {
       $('.inputName').focus();
     }
   })
-
   // REGISTER MODAL BUTTON ## INSERT IN DATENBANK UND ERZEUGT DAS LABEL
   $('#btnRegisterCheckIn').on('click', function (event) {
     if(!getUrlParameter('preview')) {
@@ -126,7 +125,6 @@ $( document ).ready(function() {
     } //End If Debug
   } // End If Preview
   })
-
   // CHECKOUT MODAL SHOW FUNCTION
   $('#checkOutModalCenter').on('shown.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
@@ -137,7 +135,6 @@ $( document ).ready(function() {
     modal.find('.checkout-body .inputCheckOutId').val("").show();
     modal.find('.checkout-body .checkout-msg').html("").hide();
   })
-
   // CHECKOUT MODAL BUTTON ## UPDATE IN DATENBANK
   $('#btnRegisterCheckOut').on('click', function (event) {
     var hashids = new Hashids("this is my salt", 6, "1234567890ABCDEF");
@@ -164,6 +161,10 @@ $( document ).ready(function() {
     dynAppointment();
     getCurrentInHouse();
   }, 60000);
+
+  $("#current_in_house_wrapper .control_show").click(function() {
+    $("#curret_in_house").toggleClass("dnone");
+  })
 
 }); // Ende Document Ready
 
@@ -256,7 +257,10 @@ function getCurrentInHouse() {
 
     var tbl = "<table class='tbl_curret_in_house'><thead><tr><th>Name</th><th>Company</th><th>Host</th></tr></thead>";
     $.each(data, function(key, val) {
-      tbl += "<tr><td>"+ val["name"] +"</td><td>"+ val["company"] +"</td><td>"+ val["Host"] +"</td></tr>";
+      var n = (val["name"] != null) ? val["name"] : "";
+      var c = (val["company"] != null) ? val["company"] : "";
+      var h = (val["Host"] != null) ? val["Host"] : "";
+      tbl += "<tr><td>"+ n +"</td><td>"+ c +"</td><td>"+ h +"</td></tr>";
     })
     tbl += "</table>";
 
