@@ -162,6 +162,7 @@ $( document ).ready(function() {
     getCurrentInHouse();
   }, 60000);
 
+  // PRESENT VISITORS CLICK TO SHOW
   $("#current_in_house_wrapper .control_show").click(function() {
     $("#curret_in_house").toggleClass("dnone");
     setTimeout(function() {
