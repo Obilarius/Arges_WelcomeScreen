@@ -164,6 +164,9 @@ $( document ).ready(function() {
 
   $("#current_in_house_wrapper .control_show").click(function() {
     $("#curret_in_house").toggleClass("dnone");
+    setTimeout(function() {
+        $("#curret_in_house").toggleClass("dnone");
+    }, 10000);
   })
 
 }); // Ende Document Ready
