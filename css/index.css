@@ -192,3 +192,25 @@ body {
 .is-invalid::placeholder {
   color: red;
 }
+
+
+#curret_in_house {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  padding: 20px;
+  background-color: rgba(255,255,255,0.8)
+}
+#curret_in_house table.tbl_curret_in_house {
+  /* text-align: left; */
+  border-collapse: collapse;
+}
+#curret_in_house table.tbl_curret_in_house td, #curret_in_house table.tbl_curret_in_house th {
+  /* border: 1px solid #A4A4A4; */
+  border-bottom: 1px solid #A4A4A4;
+  padding: 3px 10px;
+}
+#curret_in_house table.tbl_curret_in_house thead th {
+  /* font-size: 15px; */
+  font-weight: bold;
+}

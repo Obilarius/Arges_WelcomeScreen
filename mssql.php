@@ -46,7 +46,6 @@ if( isset($_POST['name'], $_POST['company']) ) {
   }
 }
 
-
 // CHECKOUT
 if (isset($_POST['visitorid'])) {
   try {
@@ -69,6 +68,23 @@ if (isset($_POST['visitorid'])) {
   echo $no;
 }
 
+// WER IST GERADE ANGEMELDET
+if( isset($_POST['inhouse']) ) {
+  try {
+    $pdo = new PDO("sqlsrv:Server=dionysos;Database=Visitors", NULL, NULL);
+    $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+  } catch (PDOException $e) {
+      writeLog("Failed to get DB handle: " . $e->getMessage());
+      exit;
+  }
+
+  // Check Already CheckedIn
+  $statement = $pdo->prepare("SELECT * FROM tblVisitorsCheckIN WHERE checkOUT IS NULL AND checkIN >= CONVERT(datetime, convert(varchar(10), GETDATE() ,120), 120)");
+  $statement->execute();
+  $result=$statement->fetchAll(PDO::FETCH_ASSOC);
+
+  echo json_encode($result);
+}
 
 function writeLog ($data) {
   $format = "csv"; //Moeglichkeiten: csv und txt

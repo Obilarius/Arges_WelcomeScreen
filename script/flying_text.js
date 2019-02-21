@@ -3,7 +3,7 @@ var borderTop = 20; // vh
 var borderBottom = 95; // vh
 var borderLeft = 2; // vw
 var borderRight = 80;  // vw
-var speed = 1;
+var speed = 3;
 var moveStep = 1; // px
 var textdiv = ".moving-info-text";
 

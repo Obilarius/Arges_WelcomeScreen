@@ -12,7 +12,9 @@ $( document ).ready(function() {
   }
 
   $("#date").html(datum);
+  getCurrentInHouse(); // Initialer Abruf der Gäste die aktuell im Haus sind
   dynAppointment(); // Initiale befüllung mit Terminen
+
 
   // REGISTER MODAL SHOW FUNCTION
   $('#registerModalCenter').on('show.bs.modal', function (event) {
@@ -160,6 +162,7 @@ $( document ).ready(function() {
   // DYNAMISCHE TERMINE MIT INTERVAL
   window.setInterval(function()  {
     dynAppointment();
+    getCurrentInHouse();
   }, 60000);
 
 }); // Ende Document Ready
@@ -242,3 +245,21 @@ function dynAppointment () {
     })
   });
 } // Ende dynAppointment
+
+
+function getCurrentInHouse() {
+  $.post("mssql.php",
+  {
+    inhouse: true
+  }, function(data, status){
+    data = $.parseJSON(data);
+
+    var tbl = "<table class='tbl_curret_in_house'><thead><tr><th>Name</th><th>Company</th><th>Host</th></tr></thead>";
+    $.each(data, function(key, val) {
+      tbl += "<tr><td>"+ val["name"] +"</td><td>"+ val["company"] +"</td><td>"+ val["Host"] +"</td></tr>";
+    })
+    tbl += "</table>";
+
+    $("#curret_in_house").html(tbl);
+  });
+} // End getCurrentInHouse
