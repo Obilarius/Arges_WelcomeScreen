@@ -106,13 +106,13 @@ var screensaver_active = false;
 function show_screensaver(){
     $('.screensaver_wrapper').fadeIn(4000);
     $('.grid_container').css("display", "none");
-		$('.current_in_house_wrapper').css("display", "none");
+		$('#current_in_house_wrapper').css("display", "none");
     screensaver_active = true;
 }
 
 function stop_screensaver(){
     $('.grid_container').css("display", "grid");
-		$('.current_in_house_wrapper').css("display", "block");
+		$('#current_in_house_wrapper').css("display", "block");
     $('.screensaver_wrapper').fadeOut();
     screensaver_active = false;
 }
