@@ -95,10 +95,13 @@
 
       <div class="register_container">
         <div class="registerDescription">Click name or Button for Registration</div>
+        
         <!-- REGISTER BUTTON -->
         <button type="button" class="btn btn-primary btnRegister" data-toggle="modal" data-target="#registerModalCenter">REGISTRATION<i></i></button>
+        
         <!-- CHECKOUT BUTTON -->
         <button type="button" class="btn btn-primary btnCheckOut" data-toggle="modal" data-target="#checkOutModalCenter">CHECKOUT</button>
+
         <!-- REGISTER MODAL -->
         <div class="modal fade" id="registerModalCenter" tabindex="-1" role="dialog" aria-labelledby="registerModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -131,8 +134,38 @@
             </div>
           </div>
         </div>
+
         <!-- CHECKOUT MODAL -->
         <div class="modal fade" id="checkOutModalCenter" tabindex="-1" role="dialog" aria-labelledby="checkOutModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="checkOutModalLongTitle">CheckOut</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body checkout-body">
+                <div class="checkout-msg"></div>
+                <form novalidate>
+                  <div class="form-group">
+                    <input class="form-control form-control-lg CheckOutID" id="CheckOutID" type="text" placeholder="VisitorID">
+                  </div>
+                  <div class="form-group" style="display: none;">
+                    <input class="form-control form-control-lg" type="text" placeholder="Host / Gastgeber">
+                  </div>
+                </form>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnRegisterCheckOut">CheckOut</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- <div class="modal fade" id="checkOutModalCenter" tabindex="-1" role="dialog" aria-labelledby="checkOutModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -155,7 +188,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <!-- Terminliste -->
@@ -176,6 +209,7 @@
 
     </div>  <!-- grid_container -->
 
+    <!-- Present Visitors -->
     <div id="current_in_house_wrapper">
       <div class="control_show">
         PRESENT VISITORS

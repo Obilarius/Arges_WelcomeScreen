@@ -125,23 +125,26 @@ $( document ).ready(function() {
     } //End If Debug
   } // End If Preview
   })
+
   // CHECKOUT MODAL SHOW FUNCTION
   $('#checkOutModalCenter').on('shown.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
-    $('.inputCheckOutId').focus();
+    $('.CheckOutID').focus();
 
     // Update the modal's content.
     let modal = $(this)
-    modal.find('.checkout-body .inputCheckOutId').val("").show();
+    modal.find('.checkout-body .CheckOutID').val("").show();
     modal.find('.checkout-body .checkout-msg').html("").hide();
   })
   // CHECKOUT MODAL BUTTON ## UPDATE IN DATENBANK
   $('#btnRegisterCheckOut').on('click', function (event) {
     var hashids = new Hashids("this is my salt", 6, "1234567890ABCDEF");
-    var id = hashids.decode( $('.modal-body .inputCheckOutId').val().trim().toUpperCase() );
+    var CheckOutHash = $('.modal-body .CheckOutID').val().trim().toUpperCase();
+    var id = hashids.decode( CheckOutHash );
+    
     // ÜBERGABE AN DIE DATENBANK
     $.post("mssql.php", { visitorid: id[0] }, function(data){
-      $('.checkout-body .inputCheckOutId').val("").hide();
+      $('.checkout-body .CheckOutID').val("").hide();
 
       if (data == 1) {
         $('.checkout-body .checkout-msg').html("You have been successfully logged out").show();
@@ -151,9 +154,18 @@ $( document ).ready(function() {
     });
 
     window.setTimeout(function(){
-       // $('#checkOutModalCenter').modal('hide');
+      $('#CheckOutID').val("").show();
+      $('.checkout-body .checkout-msg').hide();
+      $('#checkOutModalCenter').modal('hide');
     }, 1500);
   })
+  // CHECKOUT MODAL ENTER
+  $('#CheckOutID').keyup(function(event) {
+    if(event.which == 13) {
+      event.preventDefault();
+      $('#btnRegisterCheckOut').trigger("click");
+    }
+  });
 
 
   // DYNAMISCHE TERMINE MIT INTERVAL

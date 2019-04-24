@@ -25,7 +25,9 @@
 <script type="text/javascript">
 
   $( document ).ready(function() {
-    var debug = false;
+    var debug = true;
+    if (debug) { console.log("Debug true in print.html!"); }
+
     // console.log("UTF8 -- " + decodeURI(location.search));
 
     if (location.search != '') {
