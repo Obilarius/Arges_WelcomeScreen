@@ -43,6 +43,7 @@ function newIMG (divNr) {
 
 		while(1) {
 			var rndIMG = rndNumber(1, AnzahlBilderHoch);
+
 			var src = 'url("'+ imgPath +'h' + rndIMG + '.jpg")';
 			if (checkOnScreen(src) == -1) {break;}
 		}
@@ -51,6 +52,7 @@ function newIMG (divNr) {
 
 		while(1) {
 			var rndIMG = rndNumber(1, AnzahlBilderQuer);
+
 			var src = 'url("'+ imgPath + rndIMG + '.jpg")';
 			if (checkOnScreen(src) == -1) {break;}
 		}
