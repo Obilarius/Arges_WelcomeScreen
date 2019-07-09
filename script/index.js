@@ -214,6 +214,7 @@ function dynAppointment () {
     jsonObj.sort(compareByStarttime);
 
     $("#dynTermin").html("");
+
     $.each(jsonObj, function( key, termin ) {
       // Prüfen ob Termin heute ist
 
@@ -228,6 +229,7 @@ function dynAppointment () {
         terminTemplate += (termin._Start_Time == "00:00" ? "08:00" : termin._Start_Time);
         terminTemplate += '</td><td class="col col2"><ul>';
 
+
         // NAME IN ARRAY ZERLEGEN
         if ( typeof(termin._Visitors) != "undefined" ) {
           var names = termin._Visitors.replace( /\r\n/gm, "#" ).split("#");
@@ -235,9 +237,16 @@ function dynAppointment () {
           var names = [];
         }
 
-        names.forEach( function(name) {
-          let company = termin._Company.replace(/[<br>]*<[/]*div[^>]*>/gi, "");
-          company = company.replace(/<[/]*br[^>]*>/gi, " - ");
+        names.forEach( function(name) {     
+
+          // Falls keine Company im Termin gesetzt ist wird nur "-" als Variable für die Anmeldung hinterlegt
+          let company = "-";
+
+          if (termin._Company != undefined) {
+            company = termin._Company.replace(/[<br>]*<[/]*div[^>]*>/gi, "");
+            company = company.replace(/<[/]*br[^>]*>/gi, " - ");
+          }
+          
 
           let host = ( typeof termin._Host === "undefined" ? null : termin._Host.trim() );
 

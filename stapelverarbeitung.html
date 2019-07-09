@@ -23,8 +23,8 @@
         <td>Names:</td>
       </tr>
       <tr>
-        <td><textarea name="companys" style="width: 300px; height: 500px;"></textarea></td>
-        <td><textarea name="names" style="width: 300px; height: 500px;"></textarea></td>
+        <td><textarea name="companys" style="width: 293px; height: 500px;"></textarea></td>
+        <td><textarea name="names" style="width: 293px; height: 500px;"></textarea></td>
       </tr>
     </table>
 
@@ -41,7 +41,7 @@ function losGehts() {
   var companys = $("textarea[name='companys']").val().split('\n');
 
   $.each( names, function( key, name ) {
-    CheckIn($.trim(name), companys[key]);
+    CheckIn($.trim(name), $.trim(companys[key]));
   });
 }
 
@@ -60,8 +60,8 @@ function CheckIn(_name, _company) {
     {
         name:  _name,
         company: _company,
-        location: $("input[name='location']").val(),
-        host: $("input[name='host']").val()
+        location: location,
+        host: host
     }, function(id, status){
       if (id == -1) {
         alert("Eintrag in die Datenbank fehlgeschlagen")
