@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html lang="de" dir="ltr">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
-  </head>
-  <body>
-    <img src="img/printVorlage.svg">
-    <div id="host"></div>
-    <div id="date"></div>
-    <div class="visitorId"></div>
-    <div class="datamatrix"></div>
-    <!-- <img class="datamatrix" src=""> -->
-    <div id="nameWrapper"><span id="name"></span>
-      <!-- <img src="FIRMENLOGO" alt=""> -->
-      <div id="company"></div>
-    </div>
-  </body>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title></title>
+</head>
+
+<body>
+  <img src="img/printVorlage.svg">
+  <div id="host"></div>
+  <div id="date"></div>
+  <div class="visitorId"></div>
+  <div class="datamatrix"></div>
+  <!-- <img class="datamatrix" src=""> -->
+  <div id="nameWrapper"><span id="name"></span>
+    <!-- <img src="FIRMENLOGO" alt=""> -->
+    <div id="company"></div>
+  </div>
+</body>
+
 </html>
 
 
 <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="script/datamatrix/datamatrix.js"></script>
 <script type="text/javascript" src="script/hashid/hashids.min.js"></script>
-<script type="text/javascript">
 
-  $( document ).ready(function() {
+<script type="text/javascript">
+  $(document).ready(function () {
     var debug = false;
-    if (debug) { console.log("Debug true in print.html!"); }
+    if (debug) {
+      console.log("Debug true in print.html!");
+    }
 
     // console.log("UTF8 -- " + decodeURI(location.search));
 
@@ -50,11 +55,14 @@
           var numbers = hashids.decode(hashWert);
 
           // $(".datamatrix").attr("src", "http://bwipjs-api.metafloor.com/?bcid=datamatrix&text=" + wert)
-          $(".datamatrix").barcode(hashWert, "datamatrix", {output: "bmp", moduleSize: "3"});
+          $(".datamatrix").barcode(hashWert, "datamatrix", {
+            output: "bmp",
+            moduleSize: "3"
+          });
           $(".visitorId").html(hashWert);
-        } else if(name == "host") {
+        } else if (name == "host") {
           $("#" + name).html("<span>Host:</span><br>" + wert);
-        } else if(name == "debug") {
+        } else if (name == "debug") {
           debug = true;
         } else {
           $("#" + name).html(wert);
@@ -62,7 +70,7 @@
       }
     }
 
-    setTimeout(function(){
+    setTimeout(function () {
       if (!debug) {
         window.print();
         window.close();
@@ -83,6 +91,7 @@
     height: 45mm;
     /* border: solid 1px black; */
   }
+
   #host {
     position: absolute;
     top: 40px;
@@ -91,10 +100,12 @@
     font-size: 10px;
     line-height: 10px;
   }
+
   #host span {
     font-size: 8px;
     line-height: 8px;
   }
+
   .visitorId {
     position: absolute;
     top: 17px;
@@ -103,6 +114,7 @@
     font-weight: normal;
     text-align: right;
   }
+
   .datamatrix {
     position: absolute;
     top: 18px;
@@ -110,11 +122,13 @@
     /* width: 8mm;
     height: 8mm; */
   }
+
   #date {
     position: absolute;
     top: 0px;
     right: 0px;
   }
+
   #nameWrapper {
     position: absolute;
     top: 80px;
@@ -125,6 +139,7 @@
     max-height: 85px;
     overflow: hidden;
   }
+
   #nameWrapper img {
     max-width: 70px;
     max-height: 70px;
@@ -132,6 +147,7 @@
     top: 0px;
     right: 0px;
   }
+
   #company {
     font-size: 12px;
     line-height: 14px;

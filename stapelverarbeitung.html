@@ -1,90 +1,115 @@
 <!DOCTYPE html>
 <html lang="DE" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
 
-    <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
-  </head>
-  <body>
-    Datum:<br>
-    <input type="datetime" name="date" value="05.10.2018" style="width: 600px;">
-    <br>
-    Host:<br>
-    <input type="text" name="host" value="Wirtschaftsfrühstück" style="width: 600px;">
-    <br>
-    Location:<br>
-    <input type="text" name="location" value="MeetingRoom DG" style="width: 600px;">
-    <br>
+<head>
+  <meta charset="utf-8">
+  <title></title>
 
-    <table>
-      <tr>
-        <td>Companys:</td>
-        <td>Names:</td>
-      </tr>
-      <tr>
-        <td><textarea name="companys" style="width: 293px; height: 500px;"></textarea></td>
-        <td><textarea name="names" style="width: 293px; height: 500px;"></textarea></td>
-      </tr>
-    </table>
+  <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/stapelverarbeitung.css">
+</head>
 
-    <button onclick="losGehts()">CheckIn</button>
+<body>
+  <div class="container">
+    <div class="form-wrapper">
+      <div>Datum:</div>
+      <input type="datetime" name="date" value="05.10.2018">
+      <div>Host:</div>
+      <input type="text" name="host" value="Wirtschaftsfrühstück">
+      <div>Location:</div>
+      <input type="text" name="location" value="MeetingRoom DG">
+      <div>Names: (Name; Company)</div>
+      <textarea name="persons"></textarea>
 
-  </body>
+      <button onclick="losGehts()">CheckIn</button>
+    </div>
+
+    <div class="links-wrapper">
+      <ul class="links">
+      </ul>
+    </div>
+  </div>
+
+</body>
+
 </html>
 
 
 <script type="text/javascript">
+  // let urlDebug = "print.html?company=TestFirma&date=05.10.2018&code=1337&host=Wirtschaftsfrühstück&name=Bernd Runge"
 
-function losGehts() {
-  var names = $("textarea[name='names']").val().split('\n');
-  var companys = $("textarea[name='companys']").val().split('\n');
+  // for (let i = 0; i < 10; i++) {
+  //   const urlTest = urlDebug + i.toString();
+  //   // console.log(urlDebug);
+  //   setTimeout(function () {
+  //     window.open(urlTest, 'winPrint' + i,
+  //       'width=280,height=180,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
+  //   }, i * 500);
 
-  $.each( names, function( key, name ) {
-    CheckIn($.trim(name), $.trim(companys[key]));
-  });
-}
+  // }
 
 
 
-function CheckIn(_name, _company) {
-  let date = $("input[name='date']").val();
-  var host = $("input[name='host']").val();
-  var location = $("input[name='location']").val();
 
-  if ( _name == "" || _company == "" || date == "") {
-    alert("Fehler: Datum, Firma oder keine Namen eingetragen")
-  } else {
-    // ÜBERGABE AN DIE DATENBANK
-    $.post("mssql.php",
-    {
-        name:  _name,
+  function losGehts() {
+    var persons = $("textarea[name='persons']").val().split('\n');
+
+    $.each(persons, function (key, val) {
+      const per = val.split(';');
+      // console.log(key);
+      CheckIn(per[0].trim(), per[1].trim(), key);
+    });
+  }
+
+  function CheckIn(_name, _company, _index) {
+    let date = $("input[name='date']").val();
+    var host = $("input[name='host']").val();
+    var location = $("input[name='location']").val();
+
+    if (_name == "" || _company == "" || date == "") {
+      alert("Fehler: Datum, Firma oder keine Namen eingetragen")
+    } else {
+      // ÜBERGABE AN DIE DATENBANK
+      $.post("mssql.php", {
+        name: _name,
         company: _company,
         location: location,
         host: host
-    }, function(id, status){
-      if (id == -1) {
-        alert("Eintrag in die Datenbank fehlgeschlagen")
-      } else {
-        // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
-        var n = encodeURIComponent(_name);
-        var c = encodeURIComponent(_company);
-        var d = $.trim(date);
+      }, function (id, status) {
+        if (id == -1) {
+          alert("Eintrag in die Datenbank fehlgeschlagen")
+        } else {
+          // ÜBERGABE AN DIE DRUCKFUNKTION ## ID BEINHALTET DIE ID DES GERADE EINGETRAGENEN DATENSATZES ZÜRÜCK
+          var n = encodeURIComponent(_name);
+          var c = encodeURIComponent(_company);
+          var d = $.trim(date);
 
-        var url = 'print.html';
-        url += '?name=' + n;
-        url += '&company=' + c;
-        url += '&date=' + d;
-        url += '&code=' + $.trim(id);
-        if ($("input[name='host']").val()) {
-          var h = encodeURIComponent($("input[name='host']").val());
-          url += '&host=' + h;
+          // DEBUG
+          var id = "1337";
+
+          var url = 'print.html';
+          url += '?name=' + n;
+          url += '&company=' + c;
+          url += '&date=' + d;
+          url += '&code=' + $.trim(id);
+          if ($("input[name='host']").val()) {
+            var h = encodeURIComponent($("input[name='host']").val());
+            url += '&host=' + h;
+          }
+
+          const li = document.createElement("li");
+          li.innerHTML = `<a href="${url}" target="_blank">${_name}</a>`
+
+          $(".links").append(li);
+
+          setTimeout(function () {
+            window.open(url, 'winPrint' + id,
+              'width=280,height=180,resizeable=0,scrollable=0,menubar=0,status=0,top=0', false);
+          }, _index * 500);
+          // window.open(url, 'winPrint' + id, 'width=280,height=180,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
         }
-        window.open( url, 'winPrint', 'width=210,height=80,resizeable=0,scrollable=0,menubar=0,status=0,top=0');
-        // console.log(url);
-      }
-    });
+      });
+    }
   }
-}
-
 </script>
